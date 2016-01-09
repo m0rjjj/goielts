@@ -92,3 +92,4 @@ target
 .mvn
 mvnw
 mvnw.cmd
+hibernate.properties

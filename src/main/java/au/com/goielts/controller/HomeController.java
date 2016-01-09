@@ -25,11 +25,11 @@ public class HomeController {
 	@Autowired MessageByLocaleService msg;
 	
 	
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	/*@RequestMapping(value = "/", method = RequestMethod.GET)
     public String sayHelloAgain(ModelMap model) {
 		
 		model.addAttribute("greeting", "Hello World Again, from Spring 4 MVC");
         
         return "home";
-    }
+    }*/
 }
