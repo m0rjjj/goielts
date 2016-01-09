@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      th:fragment="page">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Test</title>
+    </head>
+    <body>
+	    
+        layout page <br/>
+		<div th:if="${alert.message}" th:fragment="alert (type, message)"
+			class="alert alert-dismissable" th:classappend="'alert-' + ${alert.type}">
+			<button type="button" class="close" data-dismiss="alert"
+				aria-hidden="true">&times;</button>
+			<span th:text="${alert.message}">Test</span>
+		</div>
+	
+		<div th:include="this :: content"></div>
+        layout footer <br/>
+    </body>
+</html>

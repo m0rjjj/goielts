@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" lang="en"
+      th:include="layout :: page">
+
+	<head>
+		<link rel="stylesheet" th:href="@{/css/main.css}" type="text/css" media="screen"/>
+		<meta charset="UTF-8"/>
+		<title>Thymeleaf example</title>
+	</head>
+
+	<body>
+		<div th:fragment="content">
+			
+			<p th:text="${greeting}" class="cool"></p>
+		</div>
+	</body>
+</html>
