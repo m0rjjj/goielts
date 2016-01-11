@@ -10,7 +10,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
  
 public abstract class AbstractDao<PK extends Serializable, T> {
-     
+    
     private final Class<T> persistentClass;
      
     @SuppressWarnings("unchecked")
@@ -42,4 +42,5 @@ public abstract class AbstractDao<PK extends Serializable, T> {
         return getSession().createCriteria(persistentClass);
     }
  
+     
 }

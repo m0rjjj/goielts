@@ -1,12 +1,10 @@
 package au.com.goielts.controller;
 
-import java.math.BigDecimal;
-import java.util.List;
+
 import java.util.Locale;
  
 import javax.validation.Valid;
 
-import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
@@ -33,19 +31,22 @@ public class AppController {
     /*
      * This method will list all existing employees.
      */
-    @RequestMapping(value = { "/", "/list" }, method = RequestMethod.GET)
+/*    @RequestMapping(value = { "/", "/list" }, method = RequestMethod.GET)
     public String listEmployees(ModelMap model) {
-//    	Employee employee = new Employee();
-//    	employee.setName("Sergey");
-//    	employee.setSalary(new BigDecimal(10000));
-//    	employee.setJoiningDate(new LocalDate());
-//    	employee.setSsn("123456");
-//    	
-//    	service.saveEmployee(employee);
+    	Employee employee = new Employee();
+    	employee.setName("Sergey");
+    	employee.setSalary(new BigDecimal(10000));
+    	employee.setJoiningDate(new LocalDate());
+    	employee.setSsn("123456");
+    	
+    	service.saveEmployee(employee);
         List<Employee> employees = service.findAllEmployees();
         model.addAttribute("employees", employees);
+    	
+    	
+    	
         return "home";
-    }
+    }*/
  
     /*
      * This method will provide the medium to add a new employee.
