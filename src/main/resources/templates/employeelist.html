@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" lang="en">
+
+	<head>
+		<link rel="stylesheet" th:href="@{/css/main.css}" type="text/css" media="screen"/>
+		<meta charset="UTF-8"/>
+		<title>Thymeleaf example</title>
+	</head>
+
+	<body>
+		<table>
+        <tr>
+            <td>NAME</td><td>Joining Date</td><td>Salary</td><td>SSN</td><td></td>
+        </tr>
+            <tr th:each="employee : ${employees}">
+	            <td th:text="${employee.name}"></td>
+	            <td th:text="${employee.joiningDate}"></td>
+	            <td th:text="${employee.salary}"></td>
+	            <td><a href="#view/" th:href="@{'/edit-'+${employee.ssn}+'-employee'}" th:text="${employee.ssn}">ssn</a></td>
+	            <td><a href="#delete">delete</a></td>
+            </tr>
+    </table>
+    <br/>
+    <a href="/new" th:href="@{'/new'}">Add New Employee</a>
+	</body>
+</html>
