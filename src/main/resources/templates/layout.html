@@ -25,8 +25,11 @@
           </button>
           <a class="navbar-brand" href="#"><span>GoIELTS!</span></a>
         </div>
-        <div class="collapse navbar-collapse" id="navbar-ex-collapse" sec:authorize="hasRole('ROLE_USER')">
+        <div class="collapse navbar-collapse" id="navbar-ex-collapse" sec:authorize="isAuthenticated()">
           <ul class="nav navbar-nav navbar-right">
+            <li sec:authorize="hasRole('ADMIN')">
+              <a href="/admin">Admin Panel</a>
+            </li>
             <li class="active">
               <a href="#">Home</a>
             </li>
@@ -34,7 +37,7 @@
               <a href="#">Contacts</a>
             </li>
             <li>
-              <a href="#">Log Out</a>
+              <a th:href="@{'/logout'}">Log Out</a>
             </li>
           </ul>
         </div>

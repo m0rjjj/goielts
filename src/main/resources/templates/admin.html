@@ -1,0 +1,23 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout">
+<head>
+<title>Content page 1</title>
+</head>
+<body>
+	<div class="section" layout:fragment="content">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="jumbotron">
+					  <h1>Admin Panel</h1>
+					  <p th:text="${greeting}">...</p>
+					  <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a></p>
+					</div>
+				</div>
+			</div>
+		</div>
+    </div>
+</body>
+</html>

@@ -3,10 +3,13 @@ package au.com.goielts.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
- 
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
@@ -18,10 +21,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class HomeController {
 	
+    @Autowired
+    @Qualifier("customUserDetailsService")
+    public UserDetailsService userDetails;
+	
 	@RequestMapping(value = { "/", "/home" }, method = RequestMethod.GET)
     public String homePage(ModelMap model) {
         model.addAttribute("greeting", "Hi, Welcome to mysite");
-        return "welcome";
+        UserDetails det = userDetails.loadUserByUsername(getPrincipal());
+    	System.out.println(det.getAuthorities());
+        return "home";
     }
  
     @RequestMapping(value = "/admin", method = RequestMethod.GET)
@@ -44,9 +53,6 @@ public class HomeController {
  
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String loginPage(ModelMap model) {
-    	String password = "abc123";
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        System.out.println(passwordEncoder.encode(password));
         return "login";
     }
  
