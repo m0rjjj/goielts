@@ -1,0 +1,49 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout">
+<head>
+<title>Course List</title>
+</head>
+<body>
+	<div class="section" layout:fragment="layout_content">
+		<ul class="breadcrumb">
+			<li><a href="/">Admin Home</a></li>
+			<li>Course List</li>
+		</ul>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="panel panel-primary">
+					<div class="panel-heading">Course Module</div>
+					<div class="panel-body">
+						<div class="btn-group" role="group">
+						  <a th:href="@{/admin/course_create}" type="button" class="btn btn-success">Create Course</a>
+						</div>
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<td>#</td>
+									<td>Name</td>
+									<td></td>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="course : ${courseList}" th:id="'row_'+${course.id}">
+									<td th:text="${course.id}"></td>
+									<td th:text="${course.name}"></td>
+									
+									<td th:replace="admin/fragments/table :: buttonGroup('course', 'Course', ${course.id})"></td>
+									
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+
+		</div>
+		
+	</div>
+	
+</body>
+</html>

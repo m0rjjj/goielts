@@ -1,0 +1,35 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout">
+<head>
+<title>Admin Index</title>
+</head>
+<body>
+	<div class="section" layout:fragment="layout_content">
+		<ul class="breadcrumb">
+			<li><a href="/">Admin Home</a></li>
+		</ul>
+		<div class="row">
+			<div class="col-md-3">
+				<div class="panel panel-primary">
+					<div class="panel-heading">User Module</div>
+					<div class="panel-body">
+						<a class="btn btn-success" href="/admin/user_create" role="button">Create</a>
+						<a class="btn btn-warning" href="/admin/user_list" role="button">List</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="panel panel-primary">
+					<div class="panel-heading">Course Module</div>
+					<div class="panel-body">
+						<a class="btn btn-success" href="/admin/course_create" role="button">Create</a>
+						<a class="btn btn-warning" href="/admin/course_list" role="button">List</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

@@ -5,17 +5,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
  
 @Entity
-@Table(name="USER_PROFILE")
-public class UserProfile {
+public class Role {
  
     @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id; 
  
     @Column(name="TYPE", length=15, unique=true, nullable=false)
-    private String type = UserProfileType.USER.getUserProfileType();
+    private String type = RoleType.USER.getUserProfileType();
      
     public int getId() {
         return id;
@@ -49,9 +47,9 @@ public class UserProfile {
             return true;
         if (obj == null)
             return false;
-        if (!(obj instanceof UserProfile))
+        if (!(obj instanceof Role))
             return false;
-        UserProfile other = (UserProfile) obj;
+        Role other = (Role) obj;
         if (id != other.id)
             return false;
         if (type == null) {

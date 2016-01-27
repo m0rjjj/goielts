@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+  <head>
+
+  </head>
+  <body>
+       <td th:fragment="buttonGroup (name, entity, id)">
+		<a class="btn btn-warning" th:href="@{'/admin/'+${name}+'_edit/'+${id}}"><i class="fa fa-edit"></i></a>
+		<a class="btn btn-danger"  th:href="@{'/admin/'+${name}+'_delete/'+${id}}" th:attr="data-confirm='Are you sure you want to delete '+${entity}+'?',data-id=${id}" data-type="delete"><i class="fa fa-remove"></i></a>
+	</td>
+</body>
+</html>

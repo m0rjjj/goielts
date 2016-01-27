@@ -3,3 +3,10 @@
 	font-weight: bold;
 	font-style: italic;
 }
+.alerts-container{
+	position: fixed;
+	top:85px;
+	right:10px;
+	width: 300px;
+    z-index: 1000000;
+}

@@ -1,13 +1,13 @@
 package au.com.goielts.model;
 
-public enum UserProfileType {
+public enum RoleType {
     USER("USER"),
     DBA("DBA"),
     ADMIN("ADMIN");
      
     String userProfileType;
      
-    private UserProfileType(String userProfileType){
+    private RoleType(String userProfileType){
         this.userProfileType = userProfileType;
     }
      

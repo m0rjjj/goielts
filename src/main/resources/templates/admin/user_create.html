@@ -1,0 +1,76 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout">
+<head>
+<title>User List</title>
+</head>
+<body>
+	<div class="section" layout:fragment="layout_content">
+		<ul class="breadcrumb">
+			<li><a href="/">Admin Home</a></li>
+			<li><a href="/admin/user_list">User List</a></li>
+			<li>Edit Create</li>
+		</ul>
+		<div class="row">
+			<div class="col-md-12">
+				<form class="form-horizontal" th:action="@{''}" th:method="post" th:object="${user}">
+					<fieldset>
+						<!-- Form Name -->
+						<legend>User</legend>
+
+						<!-- Text input-->
+						<div class="form-group" th:classappend="${#fields.hasErrors('email')}? 'has-error'">
+							<label class="col-md-4 control-label" for="email">Email</label>
+							<div class="col-md-4">
+								<input th:field="*{email}" class="form-control input-md" />
+								<span class="help-block" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Incorrect</span>
+							</div>
+						</div>
+
+						<!-- Text input-->
+						<div class="form-group" th:classappend="${#fields.hasErrors('firstName')}? 'has-error'">
+							<label class="col-md-4 control-label" for="firstName">First
+								Name</label>
+							<div class="col-md-4">
+								<input class="form-control input-md" th:field="*{firstName}" />
+								<span class="help-block" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">Incorrect</span>
+							</div>
+						</div>
+
+						<!-- Text input-->
+						<div class="form-group" th:classappend="${#fields.hasErrors('lastName')}? 'has-error'">
+							<label class="col-md-4 control-label" for="lastName">Last
+								Name</label>
+							<div class="col-md-4">
+								<input class="form-control input-md" th:field="*{lastName}" />
+								<span class="help-block" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Incorrect</span>
+							</div>
+						</div>
+						
+						<!-- Text input-->
+						<div class="form-group" th:classappend="${#fields.hasErrors('password')}? 'has-error'">
+							<label class="col-md-4 control-label" for="password">Password</label>
+							<div class="col-md-4">
+								<input class="form-control input-md" th:field="*{password}" />
+								<span class="help-block" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Incorrect</span>
+							</div>
+						</div>
+
+						<!-- Button (Double) -->
+						<div class="form-group">
+							<label class="col-md-4 control-label" for="create"></label>
+							<div class="col-md-8">
+								<button id="create" name="create" class="btn btn-success">Create</button>
+								<a id="cancel" th:href="@{'/admin/user_list'}" class="btn btn-danger">Cancel</a>
+							</div>
+						</div>
+
+					</fieldset>
+				</form>
+			</div>
+
+		</div>
+	</div>
+</body>
+</html>

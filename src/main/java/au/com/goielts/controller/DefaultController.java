@@ -1,58 +1,62 @@
 package au.com.goielts.controller;
 
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import au.com.goielts.configuration.CustomSuccessHandler;
+import au.com.goielts.dao.StudentProfileDao;
+import au.com.goielts.model.StudentProfile;
+import au.com.goielts.model.User;
+import au.com.goielts.services.StudentProfileService;
+import au.com.goielts.services.UserService;
+
 
 @Controller
-public class HomeController {
-	
+public class DefaultController {
+
     @Autowired
-    @Qualifier("customUserDetailsService")
-    public UserDetailsService userDetails;
+    CustomSuccessHandler handler;
+    
+    @RequestMapping(value = "/demo", method = RequestMethod.GET)
+    public String demo(){
+    	return "demo";
+    }
 	
 	@RequestMapping(value = { "/", "/home" }, method = RequestMethod.GET)
-    public String homePage(ModelMap model) {
-        model.addAttribute("greeting", "Hi, Welcome to mysite");
-        UserDetails det = userDetails.loadUserByUsername(getPrincipal());
-    	System.out.println(det.getAuthorities());
-        return "home";
+	public String homePage(ModelMap model) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		return "forward:"+handler.determineTargetUrl(authentication);
     }
  
-    @RequestMapping(value = "/admin", method = RequestMethod.GET)
-    public String adminPage(ModelMap model) {
-        model.addAttribute("user", getPrincipal());
-        return "admin";
-    }
- 
-    @RequestMapping(value = "/db", method = RequestMethod.GET)
-    public String dbaPage(ModelMap model) {
-        model.addAttribute("user", getPrincipal());
-        return "dba";
-    }
- 
-    @RequestMapping(value = "/Access_Denied", method = RequestMethod.GET)
+    @RequestMapping(value = "/accessDenied", method = RequestMethod.GET)
     public String accessDeniedPage(ModelMap model) {
         model.addAttribute("user", getPrincipal());
         return "accessDenied";
     }
  
+    @Autowired
+    UserService service;
+    
+    @Autowired
+    StudentProfileService sService;
+    
+    
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String loginPage(ModelMap model) {
+    	
+    	User user= service.findById(1);
+    	System.out.println(user.getStudentProfile());
+    	
         return "login";
     }
  
@@ -75,5 +79,11 @@ public class HomeController {
             userName = principal.toString();
         }
         return userName;
+    }
+    
+    @RequestMapping(value="/error", method = RequestMethod.GET)
+    public String error () {
+        
+        return "error";
     }
 }

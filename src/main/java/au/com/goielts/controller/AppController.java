@@ -17,9 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  
 import au.com.goielts.model.Employee;
 import au.com.goielts.services.EmployeeService;
- 
-@Controller
-@RequestMapping("/")
+
 public class AppController {
  
     @Autowired
