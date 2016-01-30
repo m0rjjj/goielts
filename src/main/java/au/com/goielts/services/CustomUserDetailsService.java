@@ -1,8 +1,8 @@
 package au.com.goielts.services;
 
-import java.util.ArrayList;
-import java.util.List;
- 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -11,9 +11,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
- 
-import au.com.goielts.model.User;
+
 import au.com.goielts.model.Role;
+import au.com.goielts.model.User;
  
 @Service("customUserDetailsService")
 public class CustomUserDetailsService implements UserDetailsService{
@@ -31,13 +31,20 @@ public class CustomUserDetailsService implements UserDetailsService{
             System.out.println("User not found");
             throw new UsernameNotFoundException("Username not found");
         }
-            return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), 
+//        UserPrincipal principal = (UserPrincipal) user;
+//        principal.setEnabled(user.getState().equals("Active"));
+//        principal.setAuthorities(getGrantedAuthorities(user));
+//        principal.setAccountNonExpired(true);
+//        principal.setAccountNonLocked(true);
+//        principal.setCredentialsNonExpired(true);
+//        return principal;
+        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), 
                  user.getState().equals("Active"), true, true, true, getGrantedAuthorities(user));
     }
  
      
-    private List<GrantedAuthority> getGrantedAuthorities(User user){
-        List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+    private Set<GrantedAuthority> getGrantedAuthorities(User user){
+        Set<GrantedAuthority> authorities = new HashSet<GrantedAuthority>();
          
         for(Role role : user.getUserProfiles()){
             System.out.println("UserProfile : "+role);

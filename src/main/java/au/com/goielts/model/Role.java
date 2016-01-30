@@ -13,7 +13,7 @@ public class Role {
     private int id; 
  
     @Column(name="TYPE", length=15, unique=true, nullable=false)
-    private String type = RoleType.USER.getUserProfileType();
+    private String type = RoleType.STUDENT.getUserRole();
      
     public int getId() {
         return id;

@@ -1,9 +1,9 @@
 package au.com.goielts.model;
 
 public enum RoleType {
-    USER("USER"),
-    DBA("DBA"),
-    ADMIN("ADMIN");
+    ADMIN("ADMIN"),
+    STUDENT("STUDENT"),
+    TEACHER("TEACHER");
      
     String userProfileType;
      
@@ -11,7 +11,7 @@ public enum RoleType {
         this.userProfileType = userProfileType;
     }
      
-    public String getUserProfileType(){
+    public String getUserRole(){
         return userProfileType;
     }
      

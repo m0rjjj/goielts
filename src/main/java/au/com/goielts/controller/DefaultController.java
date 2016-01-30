@@ -14,11 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import au.com.goielts.configuration.CustomSuccessHandler;
-import au.com.goielts.dao.StudentProfileDao;
-import au.com.goielts.model.StudentProfile;
-import au.com.goielts.model.User;
-import au.com.goielts.services.StudentProfileService;
-import au.com.goielts.services.UserService;
 
 
 @Controller
@@ -44,18 +39,8 @@ public class DefaultController {
         return "accessDenied";
     }
  
-    @Autowired
-    UserService service;
-    
-    @Autowired
-    StudentProfileService sService;
-    
-    
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String loginPage(ModelMap model) {
-    	
-    	User user= service.findById(1);
-    	System.out.println(user.getStudentProfile());
     	
         return "login";
     }
