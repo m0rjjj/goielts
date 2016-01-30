@@ -1,0 +1,73 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="sidebar_layout">
+<head>
+<title>Content page 1</title>
+</head>
+<body>
+	<section layout:fragment="sidebar_layout_content">
+		<ul class="breadcrumb">
+			<li><a href="#">Home</a></li>
+		</ul>
+		<h1 th:text="${course.name}">IELTS Target 8 Main Page index</h1>
+		<p th:text="${course.description}">
+			course description
+		</p>
+		<div class="well">
+			<h2>
+				<i class="fa fa-fw fa-info"></i>Important Information
+			</h2>
+			<p>Donec id elit non mi porta gravida at eget metus. Fusce
+				dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh,
+				ut fermentum massa justo sit amet risus. Etiam porta sem malesuada
+				magna mollis euismod. Donec sed odio dui.</p>
+		</div>
+		<div class="panel panel-primary" th:each="week : ${course.weeks}">
+			<div class="panel-heading">
+				<h3 class="panel-title">Week <span th:text="${week.number}" th:remove="tag">number</span></h3>
+			</div>
+			<div class="panel-body">
+				<p th:text="${week.description}">
+					Week Description
+				</p>
+				<h3>Weekly Material</h3>
+				<ul class="list-unstyled">
+					<li th:each="material : ${week.materials}" th:remove="tag">
+						<div th:replace="course/fragments :: material_file (${material.filename}, ${material.path}, ${material.extention})"></div>
+					</li>
+				</ul>
+				<div class="well">
+					<h2>
+						<i class="fa fa-fw fa-comments-o"></i>Comments (2) <i
+							class="fa fa-fw fa-minus pull-right s-o"></i>
+					</h2>
+					<ul class="media-list">
+						<li class="media"><a class="pull-left" href="#"><img
+								class="media-object"
+								src="http://pingendo.github.io/pingendo-bootstrap/assets/blurry/800x600/1.jpg"
+								height="64" width="64" /></a>
+							<div class="media-body">
+								<h4 class="media-heading">Joseph</h4>
+								<p>Cras sit amet nibh libero, in gravida nulla. Nulla vel
+									metus scelerisque ante sollicitudin commodo. Cras purus odio,
+									vestibulum in vulputate at, tempus viverra turpis.</p>
+							</div></li>
+						<li class="media"><a class="pull-left" href="#"><img
+								class="media-object"
+								src="http://pingendo.github.io/pingendo-bootstrap/assets/blurry/800x600/3.jpg"
+								height="64" width="64" /></a>
+							<div class="media-body">
+								<h4 class="media-heading">Sara</h4>
+								<p>Cras sit amet nibh libero, in gravida nulla. Nulla vel
+									metus scelerisque ante sollicitudin commodo. Cras purus odio,
+									vestibulum in vulputate at, tempus viverra turpis.</p>
+							</div></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		
+	</section>
+</body>
+</html>

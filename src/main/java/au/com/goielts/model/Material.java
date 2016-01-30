@@ -1,11 +1,9 @@
 package au.com.goielts.model;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -23,7 +21,10 @@ public class Material {
 	@NotEmpty
 	@Column(nullable = false)
 	private String path;
-
+	
+	@Column(nullable = false)
+	private String extention;
+	
 	public Integer getId() {
 		return id;
 	}
@@ -46,6 +47,14 @@ public class Material {
 
 	public void setPath(String path) {
 		this.path = path;
+	}
+
+	public String getExtention() {
+		return extention;
+	}
+
+	public void setExtention(String extention) {
+		this.extention = extention;
 	}
 	
 }

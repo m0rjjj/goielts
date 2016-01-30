@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+
+</head>
+<body>
+	<ul>
+		<li th:fragment="material_file (name, path, extention)">
+			<i th:if="${extention} == 'doc' OR ${extention} == 'docx'" class="fa fa-2x fa-fw fa-file-word-o"></i>
+			<i th:if="${extention} == 'mp3' " class="fa fa-2x fa-fw fa-file-audio-o"></i>
+			<a th:href="@{${path}}" th:text="${name}">Reading</a>
+		</li>
+	</ul>
+</body>
+</html>

@@ -20,7 +20,7 @@ import au.com.goielts.model.Week;
 import au.com.goielts.services.CourseService;
 
 @Controller
-public class CourseController {
+public class AdminCourseController {
 	
 	@Autowired
     private CourseService courseService;
