@@ -19,5 +19,7 @@ public interface UserService {
 	List<User> findAll();
 	
 	int deleteById(int id);
+	
+	UserService with(String name);
      
 }

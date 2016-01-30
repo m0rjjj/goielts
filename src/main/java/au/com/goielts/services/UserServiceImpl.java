@@ -2,6 +2,7 @@ package au.com.goielts.services;
 
 import java.util.List;
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,8 @@ public class UserServiceImpl implements UserService{
     
     @Autowired
     private PasswordEncoder passwordEncoder;
+    
+    private boolean withCourses = false;
  
      
     public void save(User user){
@@ -28,11 +31,18 @@ public class UserServiceImpl implements UserService{
     }
  
     public User findById(int id) {
-        return dao.findById(id);
+    	return buildUser(dao.findById(id));
     }
  
     public User findByEmail(String email) {
-        return dao.findByEmail(email);
+        return buildUser(dao.findByEmail(email));
+    }
+    
+    private User buildUser(User user){
+    	if(withCourses){
+    		Hibernate.initialize(user.getCourses());
+    	}
+    	return user;
     }
     
     public List<User> findAll(){
@@ -61,5 +71,14 @@ public class UserServiceImpl implements UserService{
             entity.setFirstName(user.getFirstName());
             entity.setLastName(user.getLastName());
         }
+    }
+    
+    public UserService with(String name){
+    	switch(name){
+    		case "courses":
+    			this.withCourses = true;
+    		break;
+    	}
+    	return this;
     }
 }

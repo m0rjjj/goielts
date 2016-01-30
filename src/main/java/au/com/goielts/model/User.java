@@ -1,6 +1,7 @@
 package au.com.goielts.model;
 
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -67,6 +68,9 @@ public class User {
              inverseJoinColumns = { @JoinColumn(name = "ROLE_ID") })
     private Set<Role> roles = new HashSet<Role>();
     
+    @ManyToMany(mappedBy="students")
+    private Set<Course> courses = new LinkedHashSet<>();
+    
     
  
     public int getId() {
@@ -131,6 +135,14 @@ public class User {
 
 	public void setStudentProfile(StudentProfile studentProfile) {
 		this.studentProfile = studentProfile;
+	}
+
+	public Set<Course> getCourses() {
+		return courses;
+	}
+
+	public void setCourses(Set<Course> course) {
+		this.courses = course;
 	}
 
 	public Set<Role> getUserProfiles() {
