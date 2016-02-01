@@ -1,5 +1,6 @@
 package au.com.goielts.controller;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,8 +17,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import au.com.goielts.model.Course;
+import au.com.goielts.model.Task;
 import au.com.goielts.model.User;
 import au.com.goielts.services.CourseService;
+import au.com.goielts.services.TaskService;
 import au.com.goielts.services.UserService;
 
 @Controller
@@ -28,6 +31,9 @@ public class CourseController {
 	
 	@Autowired
 	private CourseService courseService;
+	
+	@Autowired
+	private TaskService taskService;
 
 	@RequestMapping(value = "/course/index", method = RequestMethod.GET)
 	public String index() {
@@ -49,6 +55,7 @@ public class CourseController {
 	
 	@RequestMapping(value = "/course/view/{id}", method = RequestMethod.GET)
 	public String view(@PathVariable int id, Model model) {
+		model.addAttribute("tasks",getTasks(id));
 		Course course = courseService.findById(id);
 		model.addAttribute(course);
 		return "/course/view";
@@ -71,6 +78,12 @@ public class CourseController {
 	@ModelAttribute("authUser")
 	private User getAuthenticatedUser() {
 		return userService.findByEmail(getPrincipal());
+	}
+	
+	
+	private List<Task> getTasks(int courseId) {
+		List<Task> tasks = taskService.findAllByCourseId(courseId);
+		return tasks;
 	}
 
 	private String getPrincipal() {

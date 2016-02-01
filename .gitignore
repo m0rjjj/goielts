@@ -93,3 +93,4 @@ target
 mvnw
 mvnw.cmd
 hibernate.properties
+files/*

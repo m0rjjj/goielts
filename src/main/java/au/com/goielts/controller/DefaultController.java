@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import au.com.goielts.configuration.CustomSuccessHandler;
 
@@ -22,14 +23,17 @@ public class DefaultController {
     @Autowired
     CustomSuccessHandler handler;
     
+    
     @RequestMapping(value = "/demo", method = RequestMethod.GET)
-    public String demo(){
+    @ResponseBody public String demo(){
+    	
     	return "demo";
     }
 	
 	@RequestMapping(value = { "/", "/home" }, method = RequestMethod.GET)
 	public String homePage(ModelMap model) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		System.out.println("forward:"+handler.determineTargetUrl(authentication));
 		return "forward:"+handler.determineTargetUrl(authentication);
     }
  

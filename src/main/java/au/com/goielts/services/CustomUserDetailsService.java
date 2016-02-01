@@ -50,7 +50,6 @@ public class CustomUserDetailsService implements UserDetailsService{
             System.out.println("UserProfile : "+role);
             authorities.add(new SimpleGrantedAuthority("ROLE_"+role.getType()));
         }
-        System.out.print("authorities :"+authorities);
         return authorities;
     }
      

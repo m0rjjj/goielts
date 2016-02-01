@@ -35,6 +35,7 @@ public class UserServiceImpl implements UserService{
     }
  
     public User findByEmail(String email) {
+    	//return dao.findByEmail(email);
         return buildUser(dao.findByEmail(email));
     }
     

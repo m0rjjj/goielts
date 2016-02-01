@@ -46,18 +46,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
       http.authorizeRequests()
-//        .antMatchers("/", "/home").permitAll()
-      	.antMatchers("/", "/home").access("hasRole('STUDENT') or hasRole('TEACHER') or hasRole('ADMIN')")
-        .antMatchers("/admin/**","/newuser").access("hasRole('ADMIN')")
-        .antMatchers("/db/**").access("hasRole('ADMIN') and hasRole('DBA')")
+      	.antMatchers("/", "/home").authenticated()
+      	.antMatchers("/course/**").access("hasRole('STUDENT') or hasRole('TEACHER')")
+      	.antMatchers("/task/**").access("hasRole('STUDENT') or hasRole('TEACHER')")
+      	.antMatchers("/files/**").authenticated()
+      	.antMatchers("/admin/**").access("hasRole('ADMIN')")
         .and().formLogin().loginPage("/login")
         .usernameParameter("email").passwordParameter("password")
         .and().csrf()
         .and().exceptionHandling().accessDeniedPage("/Access_Denied");
     }
+    
 }
     
-   /* @Override
-    public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/css/**","/js/**","/webjars/**"); // 
-    }*/
+    
