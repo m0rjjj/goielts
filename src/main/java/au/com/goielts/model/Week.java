@@ -40,6 +40,14 @@ public class Week {
 	@OrderBy("id")
 	private Set<UploadedFile> materials;
 	
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@JoinTable(name="week_comments", 
+	    joinColumns={@JoinColumn(name="week_id")},
+	    inverseJoinColumns={@JoinColumn(name="comment_id")}
+	)
+	@OrderBy("createdAt")
+	private Set<Comment> comments;
+	
 	@ManyToOne
 	@JoinColumn(name="course_id")
 	private Course course;
@@ -83,6 +91,16 @@ public class Week {
 	public void setCourse(Course course) {
 		this.course = course;
 	}
+
+	public Set<Comment> getComments() {
+		return comments;
+	}
+
+	public void setComments(Set<Comment> comments) {
+		this.comments = comments;
+	}
+	
+	
 	
 	
 }

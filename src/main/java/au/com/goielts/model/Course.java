@@ -52,7 +52,6 @@ public class Course {
         inverseJoinColumns = { @JoinColumn(name = "teacher_id") })
 	private Set<Teacher> teachers;
 	
-	@OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
 	public Set<Week> getWeeks() {
 		return weeks;
 	}

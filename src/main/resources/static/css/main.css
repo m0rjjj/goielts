@@ -10,3 +10,6 @@
 	width: 300px;
     z-index: 1000000;
 }
+.toggle_comment:hover{
+	cursor: pointer;
+}

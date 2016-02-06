@@ -38,7 +38,7 @@ public class TeacherCourseController {
 		else{
 			courseService.update(course);
 			redirectAttrs.addFlashAttribute("success", "Course " + course.getName()  + " updated successfully");
-			return "redirect:/course/list";
+			return "redirect:/teacher/course/edit/{id}";
 		}
 		
     }

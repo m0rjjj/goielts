@@ -54,9 +54,68 @@ $(function() {
     	});
     });
     
-    $(".toggle_comment").on("click",'.comment_container',function(e){
-    	$(this).removeClass=""
+    $('.comment_container').on("click",".toggle_comment",function(e){
+    	var toggleButton = $(this);
+    	var commentContainer = $(this).parents(".comment_container");
+    	var commentBlock = commentContainer.find(".comment_block");
+    	if(toggleButton.hasClass("fa-minus")){
+    		toggleButton.removeClass("fa-minus").addClass("fa-plus");
+    		commentBlock.slideDown();
+    	}else{
+    		toggleButton.removeClass("fa-plus").addClass("fa-minus");
+    		commentBlock.slideUp();
+    	}
     });
+    $('.comment_container').on("click",".submit_comment",function(e){
+    	var submitButton = $(this);
+    	var commentContainer = $(this).parents(".comment_container");
+    	var commentCount = commentContainer.find(".comment_count");
+    	var commentBlock = commentContainer.find(".comment_block");
+    	var commentList = commentContainer.find(".comment_list");
+    	var formGroup = commentBlock.find(".form-group")
+    	var textarea = formGroup.find(".comment_message");
+    	var errorBlock = formGroup.find(".error_block")
+    	if(textarea.val()==""){
+    		formGroup.addClass("has-error");
+    		errorBlock.text("Comment message could not be empty");
+    		errorBlock.slideDown();
+    	}else{
+    		formGroup.removeClass("has-error");
+    		errorBlock.slideUp();
+    		
+    		var data = {
+    			weekId:submitButton.data("weekId"),
+    			message:textarea.val(),
+    			_csrf: _csrf.token
+    		};
+    		$.post("/comment/add",data,function(msg){
+    			if(msg.success){
+    				alertFactory.success("Comment was successfully added");
+    				textarea.val("");
+    				var comment = $("<li></li>").addClass("media").hide().append(
+    					$("<div></div>").addClass("media-body")
+    					.append($("<h4></h4>").addClass("media-heading").text(msg.data.user))
+    					.append($("<p></p>").text(msg.data.message))
+    				)
+    				commentList.append(comment);
+    				comment.slideDown();
+    				commentCount.text(parseInt(commentCount.text())+1);
+    				
+    				/*<li class="media">
+					<div class="media-body">
+						<h4 class="media-heading">Joseph</h4>
+						<p>Cras sit amet nibh libero, in gravida nulla. Nulla vel
+							metus scelerisque ante sollicitudin commodo. Cras purus odio,
+							vestibulum in vulputate at, tempus viverra turpis.</p>
+					</div></li>*/
+    			}
+    		})
+    	}
+    	
+    	
+    });
+    
+    
 });
 
 var modalFactory = {
@@ -106,3 +165,64 @@ var alertFactory = {
 			);
 		},
 }
+
+
+tinymce.init({
+	  selector: "textarea.editor",
+	  height: 500,
+	  plugins: [
+	    "advlist autolink autosave link image lists charmap print preview hr anchor pagebreak spellchecker",
+	    "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
+	    "table contextmenu directionality emoticons template textcolor paste fullpage textcolor colorpicker textpattern"
+	  ],
+
+	  toolbar1: "newdocument | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | styleselect formatselect fontselect fontsizeselect",
+	  toolbar2: "cut copy paste | searchreplace | bullist numlist | outdent indent blockquote | undo redo | link unlink anchor image media code | insertdatetime preview | forecolor backcolor",
+	  toolbar3: "table | hr removeformat | subscript superscript | charmap emoticons | print fullscreen | ltr rtl | spellchecker | visualchars visualblocks nonbreaking template pagebreak restoredraft",
+
+	  menubar: false,
+	  toolbar_items_size: 'small',
+
+	  style_formats: [{
+	    title: 'Bold text',
+	    inline: 'b'
+	  }, {
+	    title: 'Red text',
+	    inline: 'span',
+	    styles: {
+	      color: '#ff0000'
+	    }
+	  }, {
+	    title: 'Red header',
+	    block: 'h1',
+	    styles: {
+	      color: '#ff0000'
+	    }
+	  }, {
+	    title: 'Example 1',
+	    inline: 'span',
+	    classes: 'example1'
+	  }, {
+	    title: 'Example 2',
+	    inline: 'span',
+	    classes: 'example2'
+	  }, {
+	    title: 'Table styles'
+	  }, {
+	    title: 'Table row 1',
+	    selector: 'tr',
+	    classes: 'tablerow1'
+	  }],
+
+	  templates: [{
+	    title: 'Test template 1',
+	    content: 'Test 1'
+	  }, {
+	    title: 'Test template 2',
+	    content: 'Test 2'
+	  }],
+	  content_css: [
+	    '//fast.fonts.net/cssapi/e6dc9b99-64fe-4292-ad98-6974f93cd2a2.css',
+	    '//www.tinymce.com/css/codepen.min.css'
+	  ]
+	});
