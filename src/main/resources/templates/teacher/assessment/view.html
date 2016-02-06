@@ -11,7 +11,7 @@
 			<li><a th:href="@{'/task/view/'+${task.id}}">Course Home</a></li>
 		</ul>
 		<h1 th:text="${task.name}">Assessment name</h1>
-		<p th:text="${task.description}">Description goes here</p>
+		<p th:utext="${task.description}">Description goes here</p>
 		<form th:action="@{''}" th:method="post" enctype="multipart/form-data">
 			<div class="form-group">
 				<th:block th:if="${assessment.markedFile}">

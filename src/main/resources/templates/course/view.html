@@ -11,8 +11,8 @@
 			<li><a href="/">Home</a></li>
 			<li th:text="${course.name}">Course Name</li>
 		</ul>
-		<h1 th:text="${course.name}">IELTS Target 8 Main Page index</h1>
-		<p th:text="${course.description}">course description</p>
+		<h1><span th:text="${course.name}">IELTS Target 8 Main Page index</span> <a sec:authorize="hasRole('TEACHER')" th:href="'/teacher/course/edit/'+${course.id}" class="btn btn-warning btn-sm">Edit</a></h1>
+		<p th:utext="${course.description}">course description</p>
 		<!-- /* 
 		<div class="well">
 			<h2>
@@ -60,18 +60,15 @@
 				</ul>
 				<div class="well comment_container">
 					<h2>
-						<i class="fa fa-fw fa-comments-o"></i>Comments (2) <i
+						<i class="fa fa-fw fa-comments-o"></i>Comments (<span class="comment_count" th:text="${week.comments.size()}">2</span>) <i
 							class="fa fa-fw fa-minus pull-right s-o toggle_comment"></i>
 					</h2>
-					<div class="comment_block">
-						<ul class="media-list">
-							<li class="media"><a class="pull-left" href="#"><img
-									class="media-object"
-									src="http://pingendo.github.io/pingendo-bootstrap/assets/blurry/800x600/1.jpg"
-									height="64" width="64" /></a>
+					<div class="comment_block" style="display: none;">
+						<ul class="media-list comment_list">
+							<li class="media" th:each="comment : ${week.comments}">
 								<div class="media-body">
-									<h4 class="media-heading">Joseph</h4>
-									<p>Cras sit amet nibh libero, in gravida nulla. Nulla vel
+									<h4 class="media-heading" th:text="${comment.user.firstName}+' '+${comment.user.lastName}">Joseph</h4>
+									<p th:text="${comment.message}">Cras sit amet nibh libero, in gravida nulla. Nulla vel
 										metus scelerisque ante sollicitudin commodo. Cras purus odio,
 										vestibulum in vulputate at, tempus viverra turpis.</p>
 								</div></li>
@@ -79,10 +76,12 @@
 						<div>
 							<form>
 								<div class="form-group">
-									<label>Email address</label>
-									<textarea class="form-control message" rows="" cols=""></textarea>
+									<label class="control-label">Comment message</label>
+									<textarea class="form-control comment_message" rows="" cols=""></textarea>
+									<div class="help-block text-danger error_block" style="display:none;"></div>
 								</div>
-								<input class="btn btn-success" type="button" value="Add comment" />
+								
+								<input class="btn btn-success submit_comment" type="button" value="Add comment" th:attr="'data-week-id'=${week.id}" />
 							</form>
 						</div>
 					</div>

@@ -9,49 +9,61 @@
 	<div class="section" layout:fragment="layout_content">
 		<ul class="breadcrumb">
 			<li><a href="/course/list">Course List</a></li>
-			<li><a th:href="@{'/course/view/'+${course.id}}" th:text="${course.name}">Course Home</a></li>
+			<li><a th:href="@{'/course/view/'+${course.id}}"
+				th:text="${course.name}">Course Home</a></li>
 			<li>Edit Task</li>
 		</ul>
 		<div class="row">
 			<div class="col-md-12">
-				<form class="form-horizontal" th:action="@{''}" th:method="post" th:object="${task}">
+				<form class="form-horizontal" th:action="@{''}" th:method="post"
+					th:object="${task}">
 					<fieldset>
 						<!-- Form Name -->
 						<legend>Task</legend>
 
 						<!-- Text input-->
-						<div class="form-group" th:classappend="${#fields.hasErrors('name')}? 'has-error'">
-							<label class="col-md-4 control-label" for="name">Name</label>
-							<div class="col-md-4">
-								<input th:field="*{name}" class="form-control input-md" />
-								<span class="help-block" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Incorrect</span>
+						<div class="form-group"
+							th:classappend="${#fields.hasErrors('name')}? 'has-error'">
+							<label class="col-md-2 control-label" for="name">Name</label>
+							<div class="col-md-10">
+								<input th:field="*{name}" class="form-control input-md" /> <span
+									class="help-block" th:if="${#fields.hasErrors('name')}"
+									th:errors="*{name}">Incorrect</span>
 							</div>
 						</div>
-						
+
 						<!-- Text input-->
-						<div class="form-group" th:classappend="${#fields.hasErrors('description')}? 'has-error'">
-							<label class="col-md-4 control-label" for="description">Description</label>
-							<div class="col-md-4">
-								<textarea th:field="*{description}" class="form-control input-md" ></textarea>
-								<span class="help-block" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Incorrect</span>
+						<div class="form-group"
+							th:classappend="${#fields.hasErrors('description')}? 'has-error'">
+							<label class="col-md-2 control-label" for="description">Description</label>
+							<div class="col-md-10">
+								<textarea th:field="*{description}"
+									class="form-control input-md editor"></textarea>
+								<span class="help-block"
+									th:if="${#fields.hasErrors('description')}"
+									th:errors="*{description}">Incorrect</span>
 							</div>
 						</div>
-						
+
 						<!-- Text input-->
-						<div class="form-group" th:classappend="${#fields.hasErrors('dueDate')}? 'has-error'">
-							<label class="col-md-4 control-label" for="dueDate">Due Date</label>
-							<div class="col-md-4">
-								<input type="text" th:field="*{dueDate}" class="form-control input-md" />
-								<span class="help-block" th:if="${#fields.hasErrors('dueDate')}" th:errors="*{dueDate}">Incorrect</span>
+						<div class="form-group"
+							th:classappend="${#fields.hasErrors('dueDate')}? 'has-error'">
+							<label class="col-md-2 control-label" for="dueDate">Due
+								Date</label>
+							<div class="col-md-10">
+								<input type="text" th:field="*{dueDate}"
+									class="form-control input-md" /> <span class="help-block"
+									th:if="${#fields.hasErrors('dueDate')}" th:errors="*{dueDate}">Incorrect</span>
 							</div>
 						</div>
 
 						<!-- Button (Double) -->
 						<div class="form-group">
-							<label class="col-md-4 control-label" for="create"></label>
-							<div class="col-md-8">
+							<label class="col-md-2 control-label" for="create"></label>
+							<div class="col-md-10">
 								<button id="create" name="create" class="btn btn-success">Update</button>
-								<a id="cancel" href="javascript:history.back()" class="btn btn-danger">Cancel</a>
+								<a id="cancel" href="javascript:history.back()"
+									class="btn btn-danger">Cancel</a>
 							</div>
 						</div>
 

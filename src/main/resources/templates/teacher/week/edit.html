@@ -21,8 +21,8 @@
 						
 						<!-- Text input-->
 						<div class="form-group" th:classappend="${#fields.hasErrors('number')}? 'has-error'">
-							<label class="col-md-4 control-label" for="number">Number</label>
-							<div class="col-md-4">
+							<label class="col-md-2 control-label" for="number">Number</label>
+							<div class="col-md-10">
 								<input type="text" th:field="*{number}" class="form-control input-md" />
 								<span class="help-block" th:if="${#fields.hasErrors('number')}" th:errors="*{number}">Incorrect</span>
 							</div>
@@ -30,9 +30,9 @@
 						
 						<!-- Text input-->
 						<div class="form-group" th:classappend="${#fields.hasErrors('description')}? 'has-error'">
-							<label class="col-md-4 control-label" for="description">Description</label>
-							<div class="col-md-4">
-								<textarea th:field="*{description}" class="form-control input-md" ></textarea>
+							<label class="col-md-2 control-label" for="description">Description</label>
+							<div class="col-md-10">
+								<textarea th:field="*{description}" class="form-control input-md editor" ></textarea>
 								<span class="help-block" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Incorrect</span>
 							</div>
 						</div>
@@ -40,8 +40,8 @@
 
 						<!-- Button (Double) -->
 						<div class="form-group">
-							<label class="col-md-4 control-label" for="create"></label>
-							<div class="col-md-8">
+							<label class="col-md-2 control-label" for="create"></label>
+							<div class="col-md-10">
 								<button id="create" name="create" class="btn btn-success">Update</button>
 								<a id="cancel" href="javascript:history.back()" class="btn btn-danger">Cancel</a>
 							</div>
@@ -54,4 +54,5 @@
 		</div>
 	</div>
 </body>
+
 </html>

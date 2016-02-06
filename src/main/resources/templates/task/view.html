@@ -12,7 +12,7 @@
 			<li><a th:href="@{'/course/view/'+${task.course.id}}" th:text="${task.course.name}">Course Home</a></li>
 		</ul>
 		<h1 th:text="${task.name}">Assessment name</h1>
-		<p th:text="${task.description}">
+		<p th:utext="${task.description}">
 			Description goes here
 		</p>
 		<p><strong>Due:</strong> <span th:text="${task.formattedDueDate}"></span></p>

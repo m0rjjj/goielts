@@ -15,8 +15,11 @@
 <script th:src="@{/webjars/jquery/2.2.0/jquery.min.js}"></script>
 <script th:src="@{/webjars/bootstrap/3.3.6/js/bootstrap.min.js}"></script>
 <script th:src="@{/webjars/angularjs/1.5.0-rc.0/angular.js}"></script>
+<script th:src="@{/webjars/tinymce/4.2.1/tinymce.min.js}"></script>
 <script th:src="@{'/js/scripts.js?v=2'}"></script>
-<script type="text/javascript" th:inline="javascript">_csrf=[[${_csrf}]];</script>
+<script type="text/javascript" th:inline="javascript">
+_csrf=[[${_csrf}]];
+</script>
 </head>
 <body>
 	<div id="alerts" class="alerts-container">

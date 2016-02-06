@@ -13,7 +13,7 @@
 			<li th:text="${task.name}"></li>
 		</ul>
 		<h1 th:text="${task.name}">Assessment name</h1>
-		<p th:text="${task.description}">Description goes here</p>
+		<p th:utext="${task.description}">Description goes here</p>
 		<p><strong>Due:</strong> <span th:text="${task.formattedDueDate}"></span></p>
 		<table class="table">
 			<caption>Assessment List</caption>
