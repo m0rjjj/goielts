@@ -17,10 +17,18 @@ import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
 
+/**
+ * The Class ApplicationConfiguration.
+ */
 @Configuration
 @ComponentScan(basePackages = "au.com.goielts")
 public class ApplicationConfiguration extends WebMvcConfigurerAdapter {
 	
+	/**
+	 * Locale resolver.
+	 *
+	 * @return the locale resolver
+	 */
 	@Bean
     public LocaleResolver localeResolver() {
         SessionLocaleResolver slr = new SessionLocaleResolver();
@@ -28,6 +36,11 @@ public class ApplicationConfiguration extends WebMvcConfigurerAdapter {
         return slr;
     }
 
+    /**
+     * Locale change interceptor.
+     *
+     * @return the locale change interceptor
+     */
     @Bean
     public LocaleChangeInterceptor localeChangeInterceptor() {
         LocaleChangeInterceptor lci = new LocaleChangeInterceptor();
@@ -35,11 +48,19 @@ public class ApplicationConfiguration extends WebMvcConfigurerAdapter {
         return lci;
     }
 
+    /* (non-Javadoc)
+     * @see org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter#addInterceptors(org.springframework.web.servlet.config.annotation.InterceptorRegistry)
+     */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(localeChangeInterceptor());
     }
     
+    /**
+     * Message source.
+     *
+     * @return the message source
+     */
     @Bean
     public MessageSource messageSource() {
         ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
@@ -48,12 +69,18 @@ public class ApplicationConfiguration extends WebMvcConfigurerAdapter {
         return messageSource;
     }
     
+    /* (non-Javadoc)
+     * @see org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter#addArgumentResolvers(java.util.List)
+     */
     @Override
 	public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
 		//UserResolver userResolver = new UserResolver();
         //argumentResolvers.add(userResolver);
     }
     
+    /* (non-Javadoc)
+     * @see org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter#addResourceHandlers(org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry)
+     */
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         super.addResourceHandlers(registry);

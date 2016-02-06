@@ -1,7 +1,6 @@
 package au.com.goielts.model;
 
 import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -10,16 +9,17 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Transient;
 
 import org.hibernate.validator.constraints.NotBlank;
  
 @Entity
+@Inheritance(strategy=InheritanceType.JOINED)
 public class User {
 	
 	public interface ValidationStepOne {
@@ -53,25 +53,15 @@ public class User {
     @Column(name="EMAIL", nullable=false)
     private String email;
     
-    @OneToOne 
-    @PrimaryKeyJoinColumn
-    StudentProfile studentProfile;
-    
- 
     @NotBlank(groups = {ValidationStepOne.class})
     @Column(name="STATE", nullable=false)
     private String state=State.ACTIVE.getState();
  
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "USER_ROLE", 
              joinColumns = { @JoinColumn(name = "USER_ID") }, 
              inverseJoinColumns = { @JoinColumn(name = "ROLE_ID") })
     private Set<Role> roles = new HashSet<Role>();
-    
-    @ManyToMany(mappedBy="students")
-    private Set<Course> courses = new LinkedHashSet<>();
-    
-    
  
     public int getId() {
         return id;
@@ -128,22 +118,6 @@ public class User {
     public void setState(String state) {
         this.state = state;
     }
- 
-    public StudentProfile getStudentProfile() {
-		return studentProfile;
-	}
-
-	public void setStudentProfile(StudentProfile studentProfile) {
-		this.studentProfile = studentProfile;
-	}
-
-	public Set<Course> getCourses() {
-		return courses;
-	}
-
-	public void setCourses(Set<Course> course) {
-		this.courses = course;
-	}
 
 	public Set<Role> getUserProfiles() {
         return roles;
@@ -152,36 +126,36 @@ public class User {
     public void setUserProfiles(Set<Role> roles) {
         this.roles = roles;
     }
- 
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + id;
-        //result = prime * result + ((ssoId == null) ? 0 : ssoId.hashCode());
-        return result;
-    }
- 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (!(obj instanceof User))
-            return false;
-        User other = (User) obj;
-        if (id != other.id)
-            return false;
-        /*if (ssoId == null) {
-            if (other.ssoId != null)
-                return false;
-        } else if (!ssoId.equals(other.ssoId))
-            return false;*/
-        return true;
-    }
- 
-    @Override
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((email == null) ? 0 : email.hashCode());
+		result = prime * result + id;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		User other = (User) obj;
+		if (email == null) {
+			if (other.email != null)
+				return false;
+		} else if (!email.equals(other.email))
+			return false;
+		if (id != other.id)
+			return false;
+		return true;
+	}
+
+	@Override
     public String toString() {
         return "User [id=" + id + ", password=" + password
                 + ", firstName=" + firstName + ", lastName=" + lastName

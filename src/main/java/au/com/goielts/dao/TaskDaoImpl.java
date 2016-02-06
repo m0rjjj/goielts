@@ -21,14 +21,13 @@ public class TaskDaoImpl extends AbstractDao<Integer, Task> implements TaskDao{
 	@Override
 	public void save(Task task) {
 		persist(task);
-		
 	}
 
 	@Override
-	public void delete(String id) {
+	public int delete(int id) {
 		Query query = getSession().createSQLQuery("delete from Task where id = :id");
-        query.setString("id", id);
-        query.executeUpdate();
+        query.setInteger("id", id);
+        return query.executeUpdate();
 		
 	}
 

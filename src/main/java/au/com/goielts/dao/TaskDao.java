@@ -9,7 +9,7 @@ public interface TaskDao {
 
 	void save(Task task);
 	 
-	void delete(String id);
+	int delete(int id);
 	 
 	List<Task> findAll();
 	

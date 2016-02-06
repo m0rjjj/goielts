@@ -12,12 +12,29 @@
 		<div class="row">
 			<div class="col-md-3">
 				<th:block th:if="${tasks}">
-					<h1>Assessments</h1>
-					<ul>
-						<li th:each="task : ${tasks}">
-						<a th:href="@{'/task/view/'+${task.id}}" th:text="${task.name}"></a> 
-						</li>
-					</ul>
+					<div sec:authorize="hasRole('STUDENT')">
+						<h1>Assessments</h1>
+						<ul>
+							<li th:each="task : ${tasks}">
+							<a th:href="@{'/task/view/'+${task.id}}" th:text="${task.name}"></a> 
+							</li>
+						</ul>
+					</div>
+					<div sec:authorize="hasRole('TEACHER')">
+						<h1>Assessments <a class="btn btn-success btn-xs" th:href="@{'/teacher/task/new/course/'+${course.id}}">New</a></h1>
+						<ul>
+							<li th:each="task : ${tasks}" th:id="'assrow_'+${task.id}">
+							<a th:href="@{'/task/view/'+${task.id}}" th:text="${task.name}"></a> - 
+							<a class="btn btn-warning btn-xs" th:href="@{'/teacher/task/edit/'+${task.id}}"><i class="fa fa-edit"></i></a>
+							<a class="btn btn-danger btn-xs" th:href="@{'/teacher/task/delete/'+${task.id}}">
+							   <i class="fa fa-times"></i>
+							</a>
+							
+							
+							</li>
+						</ul>
+					</div>
+					
 				</th:block>
 				
 				<p>

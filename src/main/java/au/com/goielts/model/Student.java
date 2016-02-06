@@ -1,20 +1,23 @@
 package au.com.goielts.model;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OrderBy;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Type;
 
 @Entity
-@Table(name="student_profile")
-public class StudentProfile {
+@Table(name="student")
+@PrimaryKeyJoinColumn(name="user_id")
+public class Student extends User{
 	
-	@Id
-    private int id;
-	
-    @Column(name="student_id", nullable=false)
+	@Column(name="student_id")
     private String studentId;
 	
 	@Type(type = "text")
@@ -24,14 +27,10 @@ public class StudentProfile {
 	
 	@Type(type = "text")
 	private String about;
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
+	
+	@ManyToMany(mappedBy="students")
+	@OrderBy("name")
+    private Set<Course> courses = new LinkedHashSet<>();
 
 	public String getStudentId() {
 		return studentId;
@@ -65,11 +64,17 @@ public class StudentProfile {
 		this.about = about;
 	}
 
+	public Set<Course> getCourses() {
+		return courses;
+	}
+
+	public void setCourses(Set<Course> courses) {
+		this.courses = courses;
+	}
+
 	@Override
 	public String toString() {
-		return "StudentProfile [id=" + id + ", studentId=" + studentId + ", address=" + address + ", phone=" + phone
-				+ ", about=" + about + "]";
+		return "Student [studentId=" + studentId + ", address=" + address + ", phone=" + phone + ", about=" + about
+				+ "]";
 	}
-	
-	
 }

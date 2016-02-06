@@ -12,10 +12,12 @@ public interface TaskService {
 
 	void update(Task task);
 
-	void delete(String id);
+	int delete(int id);
 
 	List<Task> findAll();
 	
 	List<Task> findAllByCourseId(int id);
+
+	TaskService with(String name);
 
 }

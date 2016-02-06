@@ -1,6 +1,5 @@
 package au.com.goielts.model;
 
-import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -10,19 +9,20 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 @Entity
 public class Task {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private int id = 0;
 	
 	@NotEmpty
 	@Column(nullable = false)
@@ -33,15 +33,15 @@ public class Task {
 	@Column(nullable = false)
 	private String description;
 	
-	@NotEmpty
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(nullable = false, name="due_date")
-	private Date dueDate;
+	
+	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
+	@Column(name="due_date")
+	private DateTime dueDate = new DateTime();
 
 	@OneToMany(mappedBy="task",cascade=CascadeType.ALL)
 	private Set<Assessment> assessments;
 	
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name="course_id")
 	private Course course;
 
@@ -69,11 +69,16 @@ public class Task {
 		this.description = description;
 	}
 
-	public Date getDueDate() {
+	public DateTime getDueDate() {
 		return dueDate;
 	}
+	
+	public String getFormattedDueDate(){
+		DateTimeFormatter fmt = DateTimeFormat.mediumDateTime();
+		return fmt.print(this.dueDate);
+	}
 
-	public void setDueDate(Date dueDate) {
+	public void setDueDate(DateTime dueDate) {
 		this.dueDate = dueDate;
 	}
 
@@ -92,4 +97,12 @@ public class Task {
 	public void setCourse(Course course) {
 		this.course = course;
 	}
+
+	@Override
+	public String toString() {
+		return "Task [id=" + id + ", name=" + name + ", description=" + description + ", dueDate=" + dueDate
+				+ ", assessments=" + assessments + ", course=" + course + "]";
+	}
+	
+	
 }

@@ -1,5 +1,6 @@
 package au.com.goielts.dao;
 
+import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 
 import au.com.goielts.model.UploadedFile;
@@ -19,8 +20,10 @@ public class UploadedFileDaoImpl extends AbstractDao<Integer, UploadedFile> impl
 	}
 
 	@Override
-	public void delete(int id) {
-		delete(id);
+	public int deleteById(int id) {
+		Query query = getSession().createSQLQuery("delete from materials where file_id = :id");
+        query.setInteger("id", id);
+        return query.executeUpdate();
 	}
 
 }

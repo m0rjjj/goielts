@@ -12,4 +12,6 @@ public interface CourseDao {
     void delete(String id);
      
     List<Course> findAll();
+
+	int countByStudentId(int id);
 }

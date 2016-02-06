@@ -7,9 +7,9 @@ public interface UploadedFileService {
 	UploadedFile findById(int id);
 
 	void save(UploadedFile uploadedFile);
-
-	void delete(int id);
 	
 	public void update(UploadedFile uploadedFile);
+
+	int deleteById(int id);
 	
 }

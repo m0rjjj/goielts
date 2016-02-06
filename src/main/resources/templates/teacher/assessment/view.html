@@ -1,0 +1,54 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="sidebar_layout">
+<head>
+<title>Content page 1</title>
+</head>
+<body>
+	<section layout:fragment="sidebar_layout_content">
+		<ul class="breadcrumb">
+			<li><a th:href="@{'/task/view/'+${task.id}}">Course Home</a></li>
+		</ul>
+		<h1 th:text="${task.name}">Assessment name</h1>
+		<p th:text="${task.description}">Description goes here</p>
+		<form th:action="@{''}" th:method="post" enctype="multipart/form-data">
+			<div class="form-group">
+				<th:block th:if="${assessment.markedFile}">
+					<div>
+						<h2>
+							<i class="fa fa-fw fa-file"></i> Uploaded:
+						</h2>
+						<p>
+							<a th:href="@{'/download/'+${assessment.markedFile.id}}"> <i
+								class="fa fa-fw fa-file-word-o"></i> <span
+								th:text="${assessment.markedFile.fileName}" th:remove="tag"></span>
+							</a>
+						</p>
+						<p>To change the file upload a new file</p>
+					</div>
+				</th:block>
+				<th:block th:if="!${assessment.markedFile}">
+					<h2>
+						<i class="fa fa-fw fa-file"></i> Please select the marked assessment file
+					</h2>
+				</th:block>
+				<input type="file" name="file" />
+			</div>
+			<div class="form-group">
+				<div class="form-group">
+					<label for="exampleInputEmail1">Mark</label> <input
+						type="text" class="form-control" id="mark" name="mark"
+						placeholder="mark" />
+				</div>
+			</div>
+			<div class="form-group">
+				<button type="submit" class="btn btn-default">Upload</button>
+			</div>
+		</form>
+		<br />
+
+
+	</section>
+</body>
+</html>

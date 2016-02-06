@@ -8,12 +8,14 @@
 <body>
 	<section layout:fragment="sidebar_layout_content">
 		<ul class="breadcrumb">
-			<li><a th:href="@{'/course/view/'+${task.course.id}}">Course Home</a></li>
+			<li><a th:href="@{'/course/list'}">Course List</a></li>
+			<li><a th:href="@{'/course/view/'+${task.course.id}}" th:text="${task.course.name}">Course Home</a></li>
 		</ul>
 		<h1 th:text="${task.name}">Assessment name</h1>
 		<p th:text="${task.description}">
 			Description goes here
 		</p>
+		<p><strong>Due:</strong> <span th:text="${task.formattedDueDate}"></span></p>
 		<form th:action="@{'/task/'+${task.id}+'/assignment/upload'}" th:method="post" enctype="multipart/form-data">
 			
 			

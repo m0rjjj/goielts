@@ -4,13 +4,16 @@ $(function() {
 		var type = $(this).data('type');
 		var confirmText = $(this).data('confirm');
 		var id = $(this).data('id');
+		var deleteSelectAttr = $(this).data('delidsel');
 		//console.log(confirmText);
 		var data = {
 				url:url,
 				type:type,
 				confirmText:confirmText,
-				id:id
+				id:id,
+				deleteSelectAttr:deleteSelectAttr
 			};
+		console.log(data)
 		switch (type){
 		case 'delete' :
 			modalFactory.loadModal('delete',data);
@@ -31,6 +34,7 @@ $(function() {
     $('body').on('click','#deleteModal .delete_button',function(){
     	var url = $('#deleteModal .delete_button').data('url');
     	var id = $('#deleteModal .delete_button').data('id');
+    	var deleteSelectAttr = $('#deleteModal .delete_button').data('delidsel')?$('#deleteModal .delete_button').data('delidsel'):'#row_';
     	$.ajax({
     		method:'post',
     		url:url,
@@ -38,8 +42,9 @@ $(function() {
     		success:function(msg){
     			if(msg.success){
     				alertFactory.success('Row was deleted');
-    				$('#row_'+id).slideUp(function(){
-    					$('#row_'+id).remove();
+    				console.log(deleteSelectAttr+id)
+    				$(deleteSelectAttr+id).slideUp(function(){
+    					$(deleteSelectAttr+id).remove();
     				});
     			}else{
     				alertFactory.error('There was an error while deleting the row');
@@ -47,7 +52,11 @@ $(function() {
     			$('#deleteModal').modal('hide');
     		}
     	});
-    })
+    });
+    
+    $(".toggle_comment").on("click",'.comment_container',function(e){
+    	$(this).removeClass=""
+    });
 });
 
 var modalFactory = {
@@ -66,7 +75,7 @@ var modalFactory = {
 			      </div>\
 			      <div class="modal-body">' + data.confirmText + '</div>\
 			      <div class="modal-footer">\
-			        <button type="button" class="btn btn-danger delete_button" data-id="'+data.id+'" data-url="'+data.url+'">Delete</button>\
+			        <button type="button" class="btn btn-danger delete_button" data-id="'+data.id+'" data-url="'+data.url+'" data-delselattr="'+data.deleteSelectAttr+'">Delete</button>\
 			        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>\
 			      </div>\
 			    </div>\

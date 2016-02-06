@@ -13,15 +13,25 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
  
+/**
+ * The Class SecurityConfiguration.
+ */
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
  
+    /** The user details service. */
     @Autowired
     @Qualifier("customUserDetailsService")
     UserDetailsService userDetailsService;
      
      
+    /**
+     * Configure global security.
+     *
+     * @param auth the auth
+     * @throws Exception the exception
+     */
     @Autowired
     public void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService);
@@ -29,12 +39,22 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
      
      
+    /**
+     * Password encoder.
+     *
+     * @return the password encoder
+     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
      
      
+    /**
+     * Authentication provider.
+     *
+     * @return the dao authentication provider
+     */
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
@@ -43,6 +63,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return authenticationProvider;
     }
      
+    /* (non-Javadoc)
+     * @see org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter#configure(org.springframework.security.config.annotation.web.builders.HttpSecurity)
+     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
       http.authorizeRequests()
@@ -51,6 +74,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
       	.antMatchers("/task/**").access("hasRole('STUDENT') or hasRole('TEACHER')")
       	.antMatchers("/files/**").authenticated()
       	.antMatchers("/admin/**").access("hasRole('ADMIN')")
+      	.antMatchers("/teacher/**").access("hasRole('TEACHER')")
         .and().formLogin().loginPage("/login")
         .usernameParameter("email").passwordParameter("password")
         .and().csrf()

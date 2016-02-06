@@ -25,8 +25,9 @@ public class UploadedFileServiceImpl implements UploadedFileService{
 	}
 
 	@Override
-	public void delete(int id) {
-		dao.delete(id);
+	public int deleteById(int id) {
+		return dao.deleteById(id);
+		
 	}
 	
 	@Override

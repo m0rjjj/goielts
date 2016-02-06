@@ -8,6 +8,6 @@ public interface UploadedFileDao {
 
 	void save(UploadedFile uploadedFile);
 
-	void delete(int id);
+	int deleteById(int id);
 
 }

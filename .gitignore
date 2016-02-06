@@ -94,3 +94,4 @@ mvnw
 mvnw.cmd
 hibernate.properties
 files/*
+doc/*

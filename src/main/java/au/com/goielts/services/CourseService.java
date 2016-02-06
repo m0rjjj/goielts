@@ -16,4 +16,8 @@ public interface CourseService {
 
 	List<Course> findAll();
 
+	int countByStudentId(int id);
+
+	CourseService with(String name);
+
 }

@@ -5,7 +5,6 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -36,17 +35,24 @@ public class Course {
 	private String description;
 	
 	
-	@OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
+	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "course_id")
 	@OrderBy("number")
 	private Set<Week> weeks;
 	
 	@ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "COURSE_STUDENT", 
+    @JoinTable(name = "course_student", 
         joinColumns = { @JoinColumn(name = "course_id") }, 
         inverseJoinColumns = { @JoinColumn(name = "student_id") })
-	private Set<User> students;
+	private Set<Student> students;
 	
+	@ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "course_teacher", 
+        joinColumns = { @JoinColumn(name = "course_id") }, 
+        inverseJoinColumns = { @JoinColumn(name = "teacher_id") })
+	private Set<Teacher> teachers;
+	
+	@OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
 	public Set<Week> getWeeks() {
 		return weeks;
 	}
@@ -79,11 +85,19 @@ public class Course {
 		this.description = description;
 	}
 
-	public Set<User> getStudents() {
+	public Set<Student> getStudents() {
 		return students;
 	}
 
-	public void setStudents(Set<User> students) {
+	public void setStudents(Set<Student> students) {
 		this.students = students;
+	}
+
+	public Set<Teacher> getTeachers() {
+		return teachers;
+	}
+
+	public void setTeachers(Set<Teacher> teachers) {
+		this.teachers = teachers;
 	}
 }

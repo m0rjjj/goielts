@@ -1,0 +1,28 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="sidebar_layout">
+<head>
+<title>Delete Task</title>
+</head>
+<body>
+	<section layout:fragment="sidebar_layout_content">
+		<ul class="breadcrumb">
+			<li><a th:href="@{'/course/view/'+${task.course.id}}">Course List</a></li>
+			<li><a th:href="@{'/course/view/'+${task.course.id}}" th:text="${task.course.name}">Course Home</a></li>
+			<li>Delete Task</li>
+		</ul>
+		<h1 th:text="${task.name}">Delete Task</h1>
+		
+		<p>Are you sure you want to delete the Task?</p>
+		<br/>
+		<br/>
+		<br/>
+		<p>
+			<a id="delete" class="btn btn-danger" th:href="@{'/teacher/task/delete/'+${task.id}+'/confirm/true'}">Delete</a>
+			<a id="cancel" href="javascript:history.back()" class="btn">Cancel</a>
+		</p>
+		
+	</section>
+</body>
+</html>

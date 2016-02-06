@@ -15,11 +15,18 @@ import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
  
+/**
+ * The Class CustomSuccessHandler.
+ */
 @Component
 public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler{
  
+    /** The redirect strategy. */
     private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
      
+    /* (non-Javadoc)
+     * @see org.springframework.security.web.authentication.AbstractAuthenticationTargetUrlRequestHandler#handle(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, org.springframework.security.core.Authentication)
+     */
     @Override
     protected void handle(HttpServletRequest request, 
       HttpServletResponse response, Authentication authentication) throws IOException {
@@ -33,6 +40,12 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler{
         redirectStrategy.sendRedirect(request, response, targetUrl);
     }
      
+    /**
+     * Determine target url.
+     *
+     * @param authentication the authentication
+     * @return the string
+     */
     public String determineTargetUrl(Authentication authentication) {
         String url="";
          
@@ -49,7 +62,7 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler{
         } else if (isStudent(roles)) {
             url = "/course/index";
         }else if (isTeacher(roles)) {
-            url = "/teacher/index";
+            url = "/course/index";
         } else {
             url="/accessDenied";
         }
@@ -57,14 +70,27 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler{
         return url;
     }
   
+    /* (non-Javadoc)
+     * @see org.springframework.security.web.authentication.AbstractAuthenticationTargetUrlRequestHandler#setRedirectStrategy(org.springframework.security.web.RedirectStrategy)
+     */
     public void setRedirectStrategy(RedirectStrategy redirectStrategy) {
         this.redirectStrategy = redirectStrategy;
     }
+    
+    /* (non-Javadoc)
+     * @see org.springframework.security.web.authentication.AbstractAuthenticationTargetUrlRequestHandler#getRedirectStrategy()
+     */
     protected RedirectStrategy getRedirectStrategy() {
         return redirectStrategy;
     }
      
     
+    /**
+     * Checks if is admin.
+     *
+     * @param roles the roles
+     * @return true, if is admin
+     */
     private boolean isAdmin(List<String> roles) {
         if (roles.contains("ROLE_ADMIN")) {
             return true;
@@ -72,6 +98,12 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler{
         return false;
     }
  
+    /**
+     * Checks if is student.
+     *
+     * @param roles the roles
+     * @return true, if is student
+     */
     private boolean isStudent(List<String> roles) {
         if (roles.contains("ROLE_STUDENT")) {
             return true;
@@ -79,6 +111,12 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler{
         return false;
     }
     
+    /**
+     * Checks if is teacher.
+     *
+     * @param roles the roles
+     * @return true, if is teacher
+     */
     private boolean isTeacher(List<String> roles) {
         if (roles.contains("ROLE_TEACHER")) {
             return true;

@@ -4,6 +4,7 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import au.com.goielts.model.Assessment;
+import au.com.goielts.model.Course;
 import au.com.goielts.model.Task;
 import au.com.goielts.model.UploadedFile;
 import au.com.goielts.model.User;
@@ -43,14 +45,22 @@ public class TaskController {
 	private UploadedFileService uploadedFileService;
 
 	@RequestMapping(value = "/task/view/{id}", method = RequestMethod.GET)
-	public String view(Model model, @PathVariable int id) {
+	public String view(Model model, @PathVariable int id, HttpServletRequest request) {
 		User user = getAuthenticatedUser();
-		Task task = taskService.findById(id);
+		Task task = taskService.with("assessments").findById(id);
+		Course course = task.getCourse();
 		model.addAttribute("task", task);
+		model.addAttribute("course", course);
 		Assessment assessment = assessmentService.findByTaskIdAndStudentId(id, user.getId());
+		Set<Assessment> assessments = task.getAssessments();
+		model.addAttribute("assessments", assessments);
 		System.out.println(assessment);
 		model.addAttribute("assessment", assessment);
-		return "/task/view";
+		if(request.isUserInRole("STUDENT")){
+			return "/task/view";
+		}else{
+			return "/teacher/task/view";
+		}
 	}
 
 	@RequestMapping(value = "/task/{id}/assignment/upload", method = RequestMethod.POST)

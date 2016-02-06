@@ -1,0 +1,58 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="sidebar_layout">
+<head>
+<title>Content page 1</title>
+</head>
+<body>
+	<section layout:fragment="sidebar_layout_content">
+		<ul class="breadcrumb">
+			<li><a th:href="@{'/course/list'}">Course List</a></li>
+			<li><a th:href="@{'/course/view/'+${week.course.id}}" th:text="${week.course.name}">Course Home</a></li>
+		</ul>
+		<h1 th:text="'Week #'+${week.number}">Week number</h1>
+	
+		<th:block th:if="${not #lists.isEmpty(week.materials)}">
+		<table class="table">
+			<caption>Material List</caption>
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>File</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="material,status : ${week.materials}" th:id="'row_'+${material.id}">
+					<td th:text="${status.index}+1">1</td>
+					<td><a th:href="'/download/'+${material.id}" th:text="${material.fileName}">file</a></td>
+
+					<td><a class="btn btn-danger btn-xs" th:href="'/teacher/material/delete/'+${material.id}" data-confirm="Are you sure you want to delete the material?" th:attr="data-id=${material.id}" data-type="delete" th:text="delete"></a></td>
+
+				</tr>
+
+			</tbody>
+		</table>
+		</th:block>
+		
+		<form th:action="@{''}" th:method="post" enctype="multipart/form-data">
+			<div class="form-group">
+				
+				<th:block th:if="!${assessment}"> 
+				<h2><i class="fa fa-fw fa-file"></i>
+					Please select the file
+				</h2>
+				</th:block>
+				<input type="file" name="file" />
+			</div>
+			<div class="form-group">
+				<button type="submit" class="btn btn-default">Upload</button>
+			</div>
+		</form>
+		<br/> 
+		
+
+	</section>
+</body>
+</html>

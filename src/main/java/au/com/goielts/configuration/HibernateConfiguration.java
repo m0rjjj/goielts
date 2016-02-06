@@ -17,15 +17,24 @@ import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
  
+/**
+ * The Class HibernateConfiguration.
+ */
 @Configuration
 @EnableTransactionManagement
 @ComponentScan({ "au.com.goielts.configuration" })
 @PropertySource(value = { "classpath:hibernate.properties" })
 public class HibernateConfiguration {
  
+    /** The environment. */
     @Autowired
     private Environment environment;
  
+    /**
+     * Session factory.
+     *
+     * @return the local session factory bean
+     */
     @Bean
     public LocalSessionFactoryBean sessionFactory() {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
@@ -35,6 +44,11 @@ public class HibernateConfiguration {
         return sessionFactory;
      }
      
+    /**
+     * Data source.
+     *
+     * @return the data source
+     */
     @Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
@@ -45,6 +59,11 @@ public class HibernateConfiguration {
         return dataSource;
     }
      
+    /**
+     * Hibernate properties.
+     *
+     * @return the properties
+     */
     private Properties hibernateProperties() {
         Properties properties = new Properties();
         properties.put("hibernate.dialect", environment.getRequiredProperty("hibernate.dialect"));
@@ -53,6 +72,12 @@ public class HibernateConfiguration {
         return properties;        
     }
      
+    /**
+     * Transaction manager.
+     *
+     * @param s the s
+     * @return the hibernate transaction manager
+     */
     @Bean
     @Autowired
     public HibernateTransactionManager transactionManager(SessionFactory s) {

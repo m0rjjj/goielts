@@ -1,0 +1,57 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout">
+<head>
+<title>New Week</title>
+</head>
+<body>
+	<div class="section" layout:fragment="layout_content">
+		<ul class="breadcrumb">
+			<li><a href="/course/list">Course List</a></li>
+			<li><a th:href="'/course/view/'+${course.id}" th:text="${course.name}">Course List</a></li>
+			<li>New Week</li>
+		</ul>
+		<div class="row">
+			<div class="col-md-12">
+				<form class="form-horizontal" th:action="@{''}" th:method="post" th:object="${week}">
+					<fieldset>
+						<!-- Form Name -->
+						<legend>Week</legend>
+						
+						<!-- Text input-->
+						<div class="form-group" th:classappend="${#fields.hasErrors('number')}? 'has-error'">
+							<label class="col-md-4 control-label" for="number">Number</label>
+							<div class="col-md-4">
+								<input type="text" th:field="*{number}" class="form-control input-md" />
+								<span class="help-block" th:if="${#fields.hasErrors('number')}" th:errors="*{number}">Incorrect</span>
+							</div>
+						</div>
+						
+						<!-- Text input-->
+						<div class="form-group" th:classappend="${#fields.hasErrors('description')}? 'has-error'">
+							<label class="col-md-4 control-label" for="description">Description</label>
+							<div class="col-md-4">
+								<textarea th:field="*{description}" class="form-control input-md" ></textarea>
+								<span class="help-block" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Incorrect</span>
+							</div>
+						</div>
+						
+
+						<!-- Button (Double) -->
+						<div class="form-group">
+							<label class="col-md-4 control-label" for="create"></label>
+							<div class="col-md-8">
+								<button id="create" name="create" class="btn btn-success">Create</button>
+								<a id="cancel" href="javascript:history.back()" class="btn btn-danger">Cancel</a>
+							</div>
+						</div>
+
+					</fieldset>
+				</form>
+			</div>
+
+		</div>
+	</div>
+</body>
+</html>

@@ -9,11 +9,11 @@
 	<section layout:fragment="sidebar_layout_content">
 		<ul class="breadcrumb">
 			<li><a href="/">Home</a></li>
+			<li th:text="${course.name}">Course Name</li>
 		</ul>
 		<h1 th:text="${course.name}">IELTS Target 8 Main Page index</h1>
-		<p th:text="${course.description}">
-			course description
-		</p>
+		<p th:text="${course.description}">course description</p>
+		<!-- /* 
 		<div class="well">
 			<h2>
 				<i class="fa fa-fw fa-info"></i>Important Information
@@ -23,51 +23,78 @@
 				ut fermentum massa justo sit amet risus. Etiam porta sem malesuada
 				magna mollis euismod. Donec sed odio dui.</p>
 		</div>
+		*/ -->
+		<p>
+			<a class="btn btn-success btn-sm"
+				th:href="'/teacher/week/new/course/'+${course.id}"
+				sec:authorize="hasRole('TEACHER')">Add New Week</a>
+		</p>
 		<div class="panel panel-primary" th:each="week : ${course.weeks}">
 			<div class="panel-heading">
-				<h3 class="panel-title">Week <span th:text="${week.number}" th:remove="tag">number</span></h3>
+				<h3 class="panel-title">
+					Week <span th:text="${week.number}" th:remove="tag">number</span> <span
+						class="btn-group pull-right" role="group"
+						sec:authorize="hasRole('TEACHER')"> <a
+						class="btn btn-warning btn-xs"
+						th:href="@{'/teacher/week/edit/'+${week.id}}">Edit</a> <a
+						class="btn btn-danger btn-xs"
+						th:href="@{'/teacher/week/delete/'+${week.id}}">Delete</a>
+					</span>
+				</h3>
 			</div>
+
 			<div class="panel-body">
-				<p th:text="${week.description}">
-					Week Description
-				</p>
-				<h3>Weekly Material</h3>
+				<p th:text="${week.description}">Week Description</p>
+				<h3>
+					Weekly Material <span class="btn-group" role="group"> <a
+						class="btn btn-warning btn-xs"
+						th:href="@{'/teacher/material/edit/week/'+${week.id}}"
+						sec:authorize="hasRole('TEACHER')">Edit</a>
+					</span>
+				</h3>
 				<ul class="list-unstyled">
 					<li th:each="material : ${week.materials}" th:remove="tag">
-						<div th:replace="course/fragments :: material_file (${material.filename}, ${material.path}, ${material.extention})"></div>
+						<div
+							th:replace="course/fragments :: material_file (${material.fileName}, '/download/'+${material.id}, ${material.extension})"></div>
 					</li>
 				</ul>
-				<div class="well">
+				<div class="well comment_container">
 					<h2>
 						<i class="fa fa-fw fa-comments-o"></i>Comments (2) <i
-							class="fa fa-fw fa-minus pull-right s-o"></i>
+							class="fa fa-fw fa-minus pull-right s-o toggle_comment"></i>
 					</h2>
-					<ul class="media-list">
-						<li class="media"><a class="pull-left" href="#"><img
-								class="media-object"
-								src="http://pingendo.github.io/pingendo-bootstrap/assets/blurry/800x600/1.jpg"
-								height="64" width="64" /></a>
-							<div class="media-body">
-								<h4 class="media-heading">Joseph</h4>
-								<p>Cras sit amet nibh libero, in gravida nulla. Nulla vel
-									metus scelerisque ante sollicitudin commodo. Cras purus odio,
-									vestibulum in vulputate at, tempus viverra turpis.</p>
-							</div></li>
-						<li class="media"><a class="pull-left" href="#"><img
-								class="media-object"
-								src="http://pingendo.github.io/pingendo-bootstrap/assets/blurry/800x600/3.jpg"
-								height="64" width="64" /></a>
-							<div class="media-body">
-								<h4 class="media-heading">Sara</h4>
-								<p>Cras sit amet nibh libero, in gravida nulla. Nulla vel
-									metus scelerisque ante sollicitudin commodo. Cras purus odio,
-									vestibulum in vulputate at, tempus viverra turpis.</p>
-							</div></li>
-					</ul>
+					<div class="comment_block">
+						<ul class="media-list">
+							<li class="media"><a class="pull-left" href="#"><img
+									class="media-object"
+									src="http://pingendo.github.io/pingendo-bootstrap/assets/blurry/800x600/1.jpg"
+									height="64" width="64" /></a>
+								<div class="media-body">
+									<h4 class="media-heading">Joseph</h4>
+									<p>Cras sit amet nibh libero, in gravida nulla. Nulla vel
+										metus scelerisque ante sollicitudin commodo. Cras purus odio,
+										vestibulum in vulputate at, tempus viverra turpis.</p>
+								</div></li>
+						</ul>
+						<div>
+							<form>
+								<div class="form-group">
+									<label>Email address</label>
+									<textarea class="form-control message" rows="" cols=""></textarea>
+								</div>
+								<input class="btn btn-success" type="button" value="Add comment" />
+							</form>
+						</div>
+					</div>
+
 				</div>
 			</div>
 		</div>
-		
+		<p>
+			<a class="btn btn-success btn-sm"
+				th:href="'/teacher/week/new/course/'+${course.id}"
+				sec:authorize="hasRole('TEACHER')">Add New Week</a>
+		</p>
 	</section>
 </body>
 </html>

@@ -2,7 +2,6 @@ package au.com.goielts.services;
 
 import java.util.List;
 
-import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -22,7 +21,6 @@ public class UserServiceImpl implements UserService{
     @Autowired
     private PasswordEncoder passwordEncoder;
     
-    private boolean withCourses = false;
  
      
     public void save(User user){
@@ -40,9 +38,7 @@ public class UserServiceImpl implements UserService{
     }
     
     private User buildUser(User user){
-    	if(withCourses){
-    		Hibernate.initialize(user.getCourses());
-    	}
+    	
     	return user;
     }
     
@@ -75,11 +71,7 @@ public class UserServiceImpl implements UserService{
     }
     
     public UserService with(String name){
-    	switch(name){
-    		case "courses":
-    			this.withCourses = true;
-    		break;
-    	}
+    	
     	return this;
     }
 }

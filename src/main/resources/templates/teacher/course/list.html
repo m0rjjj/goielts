@@ -1,0 +1,29 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout">
+<head>
+<title>Course List</title>
+</head>
+<body>
+	<div class="section" layout:fragment="layout_content">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<ol class="breadcrumb">
+						<li><a href="/">Home</a></li>
+						<li class="active">Course List</li>
+					</ol>
+					<h1>Course List</h1>
+					<p>This is the list of the courses that you have been assign to:</p>
+					
+					<p class="list-unstyled" th:each="course : ${courses}">
+						<a th:href="@{'/course/view/'+${course.id}}" th:text="${course.name}"></a> 
+						<a class="btn btn-warning btn-xs" th:href="@{'/teacher/course/edit/'+${course.id}}"><i class="fa fa-edit"></i> Edit</a>
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

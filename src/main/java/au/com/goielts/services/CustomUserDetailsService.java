@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import au.com.goielts.core.UserPrincipal;
 import au.com.goielts.model.Role;
 import au.com.goielts.model.User;
  
@@ -25,21 +26,19 @@ public class CustomUserDetailsService implements UserDetailsService{
     public UserDetails loadUserByUsername(String email)
             throws UsernameNotFoundException {
         User user = userService.findByEmail(email);
+        
+        System.out.println(user);
+        
         System.out.println("ssoId : "+email);
         System.out.println("User : "+user);
         if(user==null){
             System.out.println("User not found");
             throw new UsernameNotFoundException("Username not found");
         }
-//        UserPrincipal principal = (UserPrincipal) user;
-//        principal.setEnabled(user.getState().equals("Active"));
-//        principal.setAuthorities(getGrantedAuthorities(user));
-//        principal.setAccountNonExpired(true);
-//        principal.setAccountNonLocked(true);
-//        principal.setCredentialsNonExpired(true);
-//        return principal;
-        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), 
-                 user.getState().equals("Active"), true, true, true, getGrantedAuthorities(user));
+
+        UserPrincipal principal = new UserPrincipal(user.getEmail(), user.getPassword(), user.getState().equals("Active"), true, true, true, getGrantedAuthorities(user));
+        principal.setUser(user);
+        return principal;
     }
  
      

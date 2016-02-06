@@ -1,5 +1,6 @@
 package au.com.goielts.dao;
 
+import java.math.BigInteger;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -35,6 +36,13 @@ public class CourseDaoImpl extends AbstractDao<Integer, Course> implements Cours
 	public List<Course> findAll() {
 		Criteria criteria = createEntityCriteria().setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);  
         return (List<Course>) criteria.list();
+	}
+	
+	@Override
+	public int countByStudentId(int id) {
+		int count = ((BigInteger)getSession().
+				createSQLQuery("select count(*) from course_student where student_id = :id").setInteger("id", id).uniqueResult()).intValue();
+		return count;
 	}
 
 }
