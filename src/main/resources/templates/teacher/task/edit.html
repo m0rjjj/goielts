@@ -9,7 +9,7 @@
 	<div class="section" layout:fragment="layout_content">
 		<ul class="breadcrumb">
 			<li><a href="/course/list">Course List</a></li>
-			<li><a th:href="@{'/course/view/'+${task.course.id}}" th:text="${task.course.name}">Course Home</a></li>
+			<li><a th:href="@{'/course/view/'+${course.id}}" th:text="${course.name}">Course Home</a></li>
 			<li>Edit Task</li>
 		</ul>
 		<div class="row">

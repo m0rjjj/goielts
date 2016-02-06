@@ -20,4 +20,6 @@ public interface CourseService {
 
 	CourseService with(String name);
 
+	Course findByTaskId(int id);
+
 }

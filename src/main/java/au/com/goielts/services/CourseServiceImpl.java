@@ -23,6 +23,11 @@ public class CourseServiceImpl implements CourseService {
 	public Course findById(int id) {
 		return buildEntity(dao.findById(id));
 	}
+	
+	@Override
+	public Course findByTaskId(int id){
+		return dao.findByTaskId(id);
+	}
 
 	private Course buildEntity(Course course) {
 		if(withWeeks){

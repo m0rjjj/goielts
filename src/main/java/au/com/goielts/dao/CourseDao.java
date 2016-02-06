@@ -14,4 +14,6 @@ public interface CourseDao {
     List<Course> findAll();
 
 	int countByStudentId(int id);
+
+	Course findByTaskId(int id);
 }

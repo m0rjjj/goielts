@@ -27,7 +27,11 @@ public class TeacherTaskController {
 	public String edit(Model model, @PathVariable int id) {
 		
 		Task task = taskService.findById(id);
+		
+		Course course = courseService.findByTaskId(id);
+		
 		model.addAttribute("task", task);
+		model.addAttribute("course", course);
 		
 		return "/teacher/task/edit";
 	}
@@ -35,7 +39,8 @@ public class TeacherTaskController {
 	@RequestMapping(value = { "/teacher/task/edit/{id}" }, method = RequestMethod.POST)
     public String userCreate(@Valid Task task,  Errors errors,
             ModelMap model, RedirectAttributes redirectAttrs, @PathVariable int id) {
-		
+		Course course = courseService.findByTaskId(id);
+		model.addAttribute("course", course);
 		if (errors.hasErrors()) {
             System.out.println(errors);
             return "/teacher/task/edit";

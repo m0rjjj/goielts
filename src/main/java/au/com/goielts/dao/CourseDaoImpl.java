@@ -44,5 +44,12 @@ public class CourseDaoImpl extends AbstractDao<Integer, Course> implements Cours
 				createSQLQuery("select count(*) from course_student where student_id = :id").setInteger("id", id).uniqueResult()).intValue();
 		return count;
 	}
+	
+	@Override 
+	public Course findByTaskId(int id){
+		Query query = getSession().createQuery("select t.course from Task t where t.id=:id");
+		query.setInteger("id", id);
+		return (Course)query.uniqueResult();
+	}
 
 }

@@ -89,6 +89,7 @@ public class TeacherWeekController {
 		Course course = courseService.findById(courseId);
 		model.addAttribute("week", week);
 		model.addAttribute("course", course);
+		System.out.println(course);
 		
 		return "/teacher/week/new";
 	}
@@ -107,8 +108,11 @@ public class TeacherWeekController {
 	@RequestMapping(value = { "/teacher/week/new/course/{courseId}" }, method = RequestMethod.POST)
     public String newWeek(@Valid Week week,  Errors errors,
             ModelMap model, RedirectAttributes redirectAttrs, @PathVariable int courseId) {
+		
 		if (errors.hasErrors()) {
             System.out.println(errors);
+            Course course = courseService.findById(courseId);
+    		model.addAttribute("course", course);
             return "/teacher/week/new";
         }
 		else{
