@@ -69,12 +69,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
       http.authorizeRequests()
-      	.antMatchers("/", "/home").authenticated()
+      	.antMatchers("/", "/home", "/profile").authenticated()
       	.antMatchers("/course/**").access("hasRole('STUDENT') or hasRole('TEACHER')")
       	.antMatchers("/task/**").access("hasRole('STUDENT') or hasRole('TEACHER')")
       	.antMatchers("/files/**").authenticated()
       	.antMatchers("/admin/**").access("hasRole('ADMIN')")
-      	.antMatchers("/teacher/**").access("hasRole('TEACHER')")
+      	.antMatchers("/profile_student").access("hasRole('STUDENT')")
+      	.antMatchers("/teacher/**", "/profile_teacher").access("hasRole('TEACHER')")
         .and().formLogin().loginPage("/login")
         .usernameParameter("email").passwordParameter("password")
         .and().csrf()

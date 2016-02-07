@@ -52,7 +52,7 @@ public class TeacherAssessmentController {
 	}
 	
 	@RequestMapping(value = "/teacher/assessment/upload_marked/{id}", method = RequestMethod.POST)
-	public String handleFileUpload(Model model, @RequestParam("file") MultipartFile file, @RequestParam("mark") int mark, @PathVariable int id,
+	public String handleFileUpload(Model model, @RequestParam("file") MultipartFile file, @RequestParam("mark") double mark, @PathVariable int id,
 			HttpServletRequest request) {
 		if (!file.isEmpty()) {
 			try {
@@ -97,7 +97,10 @@ public class TeacherAssessmentController {
 				return "redirect:/task/view/" + id;
 			}
 		} else {
-			model.addAttribute("message", "You failed to upload the file, because the file was empty.");
+			Assessment assessment = assessmentService.findById(id);
+			assessment.setMark(mark);
+			assessmentService.update(assessment);
+			
 			return "redirect:/task/view/" + id;
 		}
 	}

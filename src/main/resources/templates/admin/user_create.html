@@ -56,6 +56,17 @@
 								<span class="help-block" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Incorrect</span>
 							</div>
 						</div>
+						
+						<!-- Text input-->
+						<div class="form-group" th:classappend="${#fields.hasErrors('userProfiles')}? 'has-error'">
+							<label class="col-md-4 control-label" for="userProfiles">User Role</label>
+							<div class="col-md-4">
+								<select class="form-control input-md" th:field="*{userProfiles}" >
+									<option th:each="role : ${roles}" th:text="${role.type}" th:value="${role.id}"></option>
+								</select>
+								<span class="help-block" th:if="${#fields.hasErrors('userProfiles')}" th:errors="*{lastName}">Incorrect</span>
+							</div>
+						</div>
 
 						<!-- Button (Double) -->
 						<div class="form-group">

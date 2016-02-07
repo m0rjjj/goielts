@@ -2,6 +2,7 @@ package au.com.goielts.services;
 
 import java.util.List;
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -38,15 +39,26 @@ public class UserServiceImpl implements UserService{
     }
     
     private User buildUser(User user){
-    	
+    	if(withRoles){
+    		Hibernate.initialize(user.getUserProfiles());
+    	}
     	return user;
     }
     
     public List<User> findAll(){
-    	return dao.findAll();
+    	return buildEntities(dao.findAll());
     }
     
-    public int deleteById(int id){
+    private List<User> buildEntities(List<User> users) {
+		if(withRoles){
+			for(User user : users){
+				Hibernate.initialize(user.getUserProfiles());
+			}
+		}
+		return users;
+	}
+
+	public int deleteById(int id){
     	return dao.deleteById(id);
     }
     
@@ -70,8 +82,16 @@ public class UserServiceImpl implements UserService{
         }
     }
     
+    private boolean withRoles = false;
+    
     public UserService with(String name){
-    	
+    	switch (name) {
+		case "roles":
+			this.withRoles = true;
+			break;
+		default:
+			break;
+		}
     	return this;
     }
 }

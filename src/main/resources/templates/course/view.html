@@ -44,7 +44,7 @@
 			</div>
 
 			<div class="panel-body">
-				<p th:text="${week.description}">Week Description</p>
+				<p th:utext="${week.description}">Week Description</p>
 				<h3>
 					Weekly Material <span class="btn-group" role="group"> <a
 						class="btn btn-warning btn-xs"
@@ -53,15 +53,16 @@
 					</span>
 				</h3>
 				<ul class="list-unstyled">
-					<li th:each="material : ${week.materials}" th:remove="tag">
-						<div
-							th:replace="course/fragments :: material_file (${material.fileName}, '/download/'+${material.id}, ${material.extension})"></div>
+					<li th:each="material : ${week.materials}">
+						<span
+					th:with="file=${material}"
+					th:utext="${@fileHelper.getIconLink(file)}"></span>
 					</li>
 				</ul>
 				<div class="well comment_container">
 					<h2>
 						<i class="fa fa-fw fa-comments-o"></i>Comments (<span class="comment_count" th:text="${week.comments.size()}">2</span>) <i
-							class="fa fa-fw fa-minus pull-right s-o toggle_comment"></i>
+							class="fa fa-fw fa-plus pull-right s-o toggle_comment"></i>
 					</h2>
 					<div class="comment_block" style="display: none;">
 						<ul class="media-list comment_list">

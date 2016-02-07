@@ -1,0 +1,148 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout">
+
+
+<head>
+<title>Assign Teachers</title>
+</head>
+<body>
+	<div class="section" layout:fragment="layout_content">
+		<ul class="breadcrumb">
+			<li><a href="/">Admin Home</a></li>
+			<li><a href="/admin/course_list">Course List</a></li>
+			<li>Assign Teachers</li>
+		</ul>
+		<div class="row">
+			<div class="col-md-12">
+				<form class="form-horizontal" th:action="@{''}" th:method="post"
+					th:object="${course}">
+
+					<fieldset>
+						<!-- Form Name -->
+						<legend>Assign Teachers</legend>
+
+						<div class="form-group">
+							<label class="col-md-2 control-label" for="name">Current
+								course teachers</label>
+							<div class="col-md-10">
+								<th:block th:if="!${course.teachers.size()}">
+								<h2>There are carently no teahers assigned to this course</h2>
+								</th:block>
+								<th:block th:if="${course.teachers.size()}">
+								<table class="table table-striped table-hover">
+									<thead>
+										<tr>
+											<td>#</td>
+											<td>Name</td>
+											<td style="width: 100px;"></td>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="teacher,status : ${course.teachers}"
+											th:id="'row_'+${teacher.id}">
+											<td th:text="${status.index}+1">#</td>
+											<td th:text="${teacher.fullName}">Name</td>
+											<td style="width: 100px;"><a class="btn btn-danger"
+												th:href="@{'/admin/course/'+${course.id}+'/remove_teacher/'+${teacher.id}}"
+												data-confirm="Are you sure you want to remove this teacher from the course?"
+												th:attr="data-id=${teacher.id}" data-type="delete"
+												data-message="The teacher was successfully removed from the course">Remove
+													from Course</a></td>
+										</tr>
+									</tbody>
+								</table>
+								</th:block>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-md-2 control-label" for="name">Add
+								teachers</label>
+							<div class="col-md-10">
+								<select name="teacherId" class="js-data-example-ajax"
+									style="width: 100%;">
+									<option value="" selected="selected">Search for a
+										student</option>
+								</select>
+							</div>
+						</div>
+
+						<!-- Button (Double) -->
+						<div class="form-group">
+							<label class="col-md-2 control-label" for="create"></label>
+							<div class="col-md-10">
+								<button id="create" name="create" class="btn btn-success">Add</button>
+								<a id="cancel" th:href="@{'/admin/course_list'}"
+									class="btn btn-danger">Back</a>
+							</div>
+						</div>
+
+					</fieldset>
+				</form>
+			</div>
+
+		</div>
+	</div>
+</body>
+</html>
+<script th:inline="javascript">
+	/*<![CDATA[*/
+	$(function() {
+		$(".js-data-example-ajax").select2({
+			ajax : {
+				url : "/admin/get_teachers",
+				dataType : 'json',
+				delay : 250,
+				data : function(params) {
+					return {
+						q : params.term,
+						page : params.page
+					};
+				},
+				processResults : function(data, params) {
+					params.page = params.page || 1;
+
+					return {
+						results : data.items,
+						pagination : {
+							more : (params.page * 30) < data.total_count
+						}
+					};
+				},
+				cache : true
+			},
+			escapeMarkup : function(markup) {
+				return markup;
+			}, // let our custom
+			// formatter work
+			minimumInputLength : 1,
+			templateResult : formatRepo, // omitted for brevity, see the source of
+			// this page
+			templateSelection : formatRepoSelection
+		// omitted for brevity, see the
+		// source of this page
+		});
+
+		function formatRepo(item) {
+			if (item.loading)
+				return "Loading";
+			var markup = "<div class='select2-result-repository clearfix'>"
+					+ "<div>"
+					+ "<div class='select2-result-repository__title'>"
+					+ item.fullName + "</div>"
+					+ "<div class='select2-result-repository__description'>"+
+					item.email + "</div>" +
+
+			"</div>" + "</div>";
+
+			return markup;
+		}
+
+		function formatRepoSelection(item) {
+			return item.fullName;
+		}
+	});
+	/*]]>*/
+</script>

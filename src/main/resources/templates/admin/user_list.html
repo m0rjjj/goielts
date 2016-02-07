@@ -36,7 +36,7 @@
 									<td th:text="${user.email}"></td>
 									<td th:text="${user.firstName}"></td>
 									<td th:text="${user.lastName}"></td>
-									<td></td>
+									<td th:text="${user.role}"></td>
 									<td>
 										<a class="btn btn-warning" th:href="@{'/admin/user_edit/'+${user.id}}"><i class="fa fa-edit"></i></a>
 										<a class="btn btn-danger"  th:href="@{'/admin/user_delete/'+${user.id}}" data-confirm="Are you sure you want to delete User?" th:attr="data-id=${user.id}" data-type="delete"><i class="fa fa-remove"></i></a>

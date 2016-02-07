@@ -1,5 +1,7 @@
 package au.com.goielts.services;
 
+import java.util.List;
+
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -51,6 +53,31 @@ public class TeacherServiceImpl implements TeacherService{
 		}
 		
 		return this;
+	}
+	
+	@Override
+	public void createProfile(int id) {
+		dao.createProfile(id);
+	}
+
+	@Override
+	public List<Teacher> findAllByTerm(String term) {
+		return dao.findAllByTerm(term);
+	}
+
+	@Override
+	public void updateProfile(int id, Teacher teacher) {
+		Teacher entity = dao.findById(id);
+		if(entity!=null){
+			entity.setFirstName(teacher.getFirstName());
+			entity.setLastName(teacher.getLastName());
+			entity.setEmail(teacher.getEmail());
+			entity.setPhone(teacher.getPhone());
+			entity.setAbout(teacher.getAbout());
+			entity.setAddress(teacher.getAddress());
+			entity.setQualifications(teacher.getQualifications());
+		}
+		
 	}
 
 }

@@ -1,0 +1,88 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout">
+<head>
+<title>Profile Edit</title>
+</head>
+<body>
+	<div class="section" layout:fragment="layout_content">
+		<ul class="breadcrumb">
+			<li><a href="/">Home</a></li>
+			<li>Profile Edit</li>
+		</ul>
+		<div class="row">
+			<div class="col-md-12">
+				<form class="form-horizontal" th:action="@{'/profile_student'}" th:method="post" th:object="${student}">
+					<fieldset>
+						<!-- Form Name -->
+						<legend>Profile</legend>
+						
+						<!-- Text input-->
+						<div class="form-group" th:classappend="${#fields.hasErrors('email')}? 'has-error'">
+							<label class="col-md-2 control-label" for="email">Email</label>
+							<div class="col-md-10">
+								<input th:field="*{email}" class="form-control input-md" />
+								<span class="help-block" th:if="${#fields.hasErrors('email')}" th:errors="*{firstName}">Incorrect</span>
+							</div>
+						</div>
+
+						<!-- Text input-->
+						<div class="form-group" th:classappend="${#fields.hasErrors('firstName')}? 'has-error'">
+							<label class="col-md-2 control-label" for="firstName">First Name</label>
+							<div class="col-md-10">
+								<input th:field="*{firstName}" class="form-control input-md" />
+								<span class="help-block" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">Incorrect</span>
+							</div>
+						</div>
+						
+						<!-- Text input-->
+						<div class="form-group" th:classappend="${#fields.hasErrors('lastName')}? 'has-error'">
+							<label class="col-md-2 control-label" for="lastName">Last Name</label>
+							<div class="col-md-10">
+								<input th:field="*{lastName}" class="form-control input-md" />
+								<span class="help-block" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Incorrect</span>
+							</div>
+						</div>
+						
+						<div class="form-group" th:classappend="${#fields.hasErrors('phone')}? 'has-error'">
+							<label class="col-md-2 control-label" for="phone">Phone</label>
+							<div class="col-md-10">
+								<input th:field="*{phone}" class="form-control input-md" />
+								<span class="help-block" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}">Incorrect</span>
+							</div>
+						</div>
+						<div class="form-group" th:classappend="${#fields.hasErrors('address')}? 'has-error'">
+							<label class="col-md-2 control-label" for="address">Address</label>
+							<div class="col-md-10">
+								<textarea th:field="*{address}" class="form-control input-md editor-small" ></textarea>
+								<span class="help-block" th:if="${#fields.hasErrors('address')}" th:errors="*{address}">Incorrect</span>
+							</div>
+						</div>
+						<div class="form-group" th:classappend="${#fields.hasErrors('about')}? 'has-error'">
+							<label class="col-md-2 control-label" for="address">About</label>
+							<div class="col-md-10">
+								<textarea th:field="*{about}" class="form-control input-md editor-small" ></textarea>
+								<span class="help-block" th:if="${#fields.hasErrors('about')}" th:errors="*{about}">Incorrect</span>
+							</div>
+						</div>
+						
+
+						<!-- Button (Double) -->
+						<div class="form-group">
+							<label class="col-md-2 control-label" for="create"></label>
+							<div class="col-md-10">
+								<button id="create" name="create" class="btn btn-success">Update</button>
+								<a id="cancel" href="/" class="btn btn-danger">Cancel</a>
+							</div>
+						</div>
+
+					</fieldset>
+				</form>
+			</div>
+
+		</div>
+	</div>
+</body>
+
+</html>

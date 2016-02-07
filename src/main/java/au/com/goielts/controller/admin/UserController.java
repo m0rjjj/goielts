@@ -7,21 +7,30 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import au.com.goielts.JsonResponse;
+import au.com.goielts.model.Role;
 import au.com.goielts.model.User;
+import au.com.goielts.services.RoleService;
+import au.com.goielts.services.StudentService;
+import au.com.goielts.services.TeacherService;
 import au.com.goielts.services.UserService;
 
 @Controller
+@SessionAttributes("roles")
 public class UserController {
 	
-	@Autowired
-    private UserService userService;
+	@Autowired private UserService userService;
+	@Autowired private StudentService studentService;
+	@Autowired private TeacherService teacherService;
+	@Autowired private RoleService roleService;
 	
 	@RequestMapping(value = "/admin", method = RequestMethod.GET)
 	public String admin(){
@@ -32,7 +41,7 @@ public class UserController {
 	
 	@RequestMapping(value = "/admin/user_list", method = RequestMethod.GET)
 	public String userList(ModelMap model){
-		List<User> userList = userService.findAll();
+		List<User> userList = userService.with("roles").findAll();
 		model.addAttribute("userList", userList);
 		return "/admin/user_list";
 	}
@@ -54,6 +63,12 @@ public class UserController {
         }
 		else{
 			userService.save(user);
+			
+			if(user.getRole().equals("STUDENT")){
+				studentService.createProfile(user.getId());
+			}else if(user.getRole().equals("TEACHER")){
+				teacherService.createProfile(user.getId());
+			}
 			redirectAttrs.addFlashAttribute("success", "User " + user.getFirstName()  + " created successfully");
 			return "redirect:/admin/user_list";
 		}
@@ -62,7 +77,7 @@ public class UserController {
 	
 	@RequestMapping(value = "/admin/user_edit/{id}", method = RequestMethod.GET)
 	public String userEdit(@PathVariable int id, ModelMap model){
-		User user = userService.findById(id);
+		User user = userService.with("roles").findById(id);
 		model.addAttribute("user", user);
 		return "/admin/user_edit";
 	}
@@ -91,4 +106,9 @@ public class UserController {
 			return JsonResponse.factory(false);
 		}
 	}
+	
+	@ModelAttribute("roles")
+    public List<Role> initializeProfiles() {
+        return roleService.findAll();
+    }
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.Query;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
@@ -29,6 +30,7 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
     @SuppressWarnings("unchecked")
     public List<User> findAll(){
     	Criteria criteria = createEntityCriteria();
+    	criteria.addOrder(Order.asc("id"));
         return (List<User>) criteria.list();
     }
     

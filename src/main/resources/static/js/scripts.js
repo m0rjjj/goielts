@@ -5,13 +5,15 @@ $(function() {
 		var confirmText = $(this).data('confirm');
 		var id = $(this).data('id');
 		var deleteSelectAttr = $(this).data('delidsel');
-		//console.log(confirmText);
+		var message = $(this).data('message')
+		// console.log(confirmText);
 		var data = {
 				url:url,
 				type:type,
 				confirmText:confirmText,
 				id:id,
-				deleteSelectAttr:deleteSelectAttr
+				deleteSelectAttr:deleteSelectAttr,
+				message:message
 			};
 		console.log(data)
 		switch (type){
@@ -22,18 +24,27 @@ $(function() {
 			
 			break;
 		}
-//		if (!$('#myModal').length) {
-//			$('body').append('<div id="dataConfirmModal" class="modal" role="dialog" aria-labelledby="dataConfirmLabel" aria-hidden="true"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button><h3 id="dataConfirmLabel">Please Confirm</h3></div><div class="modal-body"></div><div class="modal-footer"><button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button><a class="btn btn-primary" id="dataConfirmOK">OK</a></div></div>');
-//		}
-//		$('#myModal').find('.modal-body').text($(this).attr('data-confirm'));
-//		$('#dataConfirmOK').attr('href', href);
-//		$('#myModal').modal({show:true});
+// if (!$('#myModal').length) {
+// $('body').append('<div id="dataConfirmModal" class="modal" role="dialog"
+// aria-labelledby="dataConfirmLabel" aria-hidden="true"><div
+// class="modal-header"><button type="button" class="close" data-dismiss="modal"
+// aria-hidden="true">×</button><h3 id="dataConfirmLabel">Please
+// Confirm</h3></div><div class="modal-body"></div><div
+// class="modal-footer"><button class="btn" data-dismiss="modal"
+// aria-hidden="true">Cancel</button><a class="btn btn-primary"
+// id="dataConfirmOK">OK</a></div></div>');
+// }
+// $('#myModal').find('.modal-body').text($(this).attr('data-confirm'));
+// $('#dataConfirmOK').attr('href', href);
+// $('#myModal').modal({show:true});
 		return false;
 	});
     
     $('body').on('click','#deleteModal .delete_button',function(){
     	var url = $('#deleteModal .delete_button').data('url');
     	var id = $('#deleteModal .delete_button').data('id');
+    	var message = $('#deleteModal .delete_button').data('message');
+    	message = message?message:'Row was successfully deleted';
     	var deleteSelectAttr = $('#deleteModal .delete_button').data('delidsel')?$('#deleteModal .delete_button').data('delidsel'):'#row_';
     	$.ajax({
     		method:'post',
@@ -41,7 +52,7 @@ $(function() {
     		data:{_csrf: _csrf.token},
     		success:function(msg){
     			if(msg.success){
-    				alertFactory.success('Row was deleted');
+    				alertFactory.success(message);
     				console.log(deleteSelectAttr+id)
     				$(deleteSelectAttr+id).slideUp(function(){
     					$(deleteSelectAttr+id).remove();
@@ -60,10 +71,10 @@ $(function() {
     	var commentBlock = commentContainer.find(".comment_block");
     	if(toggleButton.hasClass("fa-minus")){
     		toggleButton.removeClass("fa-minus").addClass("fa-plus");
-    		commentBlock.slideDown();
+    		commentBlock.slideUp();
     	}else{
     		toggleButton.removeClass("fa-plus").addClass("fa-minus");
-    		commentBlock.slideUp();
+    		commentBlock.slideDown();
     	}
     });
     $('.comment_container').on("click",".submit_comment",function(e){
@@ -101,13 +112,14 @@ $(function() {
     				comment.slideDown();
     				commentCount.text(parseInt(commentCount.text())+1);
     				
-    				/*<li class="media">
-					<div class="media-body">
-						<h4 class="media-heading">Joseph</h4>
-						<p>Cras sit amet nibh libero, in gravida nulla. Nulla vel
-							metus scelerisque ante sollicitudin commodo. Cras purus odio,
-							vestibulum in vulputate at, tempus viverra turpis.</p>
-					</div></li>*/
+    				/*
+					 * <li class="media"> <div class="media-body">
+					 * <h4 class="media-heading">Joseph</h4> <p>Cras sit amet
+					 * nibh libero, in gravida nulla. Nulla vel metus
+					 * scelerisque ante sollicitudin commodo. Cras purus odio,
+					 * vestibulum in vulputate at, tempus viverra turpis.</p>
+					 * </div></li>
+					 */
     			}
     		})
     	}
@@ -134,7 +146,7 @@ var modalFactory = {
 			      </div>\
 			      <div class="modal-body">' + data.confirmText + '</div>\
 			      <div class="modal-footer">\
-			        <button type="button" class="btn btn-danger delete_button" data-id="'+data.id+'" data-url="'+data.url+'" data-delselattr="'+data.deleteSelectAttr+'">Delete</button>\
+			        <button type="button" class="btn btn-danger delete_button" data-id="'+data.id+'" data-url="'+data.url+'" data-delselattr="'+data.deleteSelectAttr+'" data-message="'+data.message+'">Delete</button>\
 			        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>\
 			      </div>\
 			    </div>\
@@ -221,6 +233,20 @@ tinymce.init({
 	    title: 'Test template 2',
 	    content: 'Test 2'
 	  }],
+	  content_css: [
+	    '//fast.fonts.net/cssapi/e6dc9b99-64fe-4292-ad98-6974f93cd2a2.css',
+	    '//www.tinymce.com/css/codepen.min.css'
+	  ]
+	});
+
+tinymce.init({
+	  selector: 'textarea.editor-small',
+	  height: 200,
+	  plugins: [
+	    'advlist autolink lists link image charmap',
+	    'insertdatetime media'
+	  ],
+	  toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
 	  content_css: [
 	    '//fast.fonts.net/cssapi/e6dc9b99-64fe-4292-ad98-6974f93cd2a2.css',
 	    '//www.tinymce.com/css/codepen.min.css'

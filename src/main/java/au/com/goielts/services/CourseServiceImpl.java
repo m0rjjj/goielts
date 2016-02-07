@@ -18,6 +18,8 @@ public class CourseServiceImpl implements CourseService {
 	private CourseDao dao;
 	
 	private boolean withWeeks = false;
+	private boolean withStudents = false;
+	private boolean withTeachers = false;
 
 	@Override
 	public Course findById(int id) {
@@ -32,6 +34,12 @@ public class CourseServiceImpl implements CourseService {
 	private Course buildEntity(Course course) {
 		if(withWeeks){
 			Hibernate.initialize(course.getWeeks());
+		}
+		if(withStudents){
+			Hibernate.initialize(course.getStudents());
+		}
+		if(withTeachers){
+			Hibernate.initialize(course.getTeachers());
 		}
 		return course;
 	}
@@ -51,8 +59,8 @@ public class CourseServiceImpl implements CourseService {
 	}
 
 	@Override
-	public void delete(String id) {
-		dao.delete(id);
+	public int deleteById(int id) {
+		return dao.deleteById(id);
 	}
 
 	@Override
@@ -66,10 +74,21 @@ public class CourseServiceImpl implements CourseService {
 	}
 	
 	@Override
+	public void merge(Course course){
+		dao.merge(course);
+	}
+	
+	@Override
 	public CourseService with(String name){
 		switch (name) {
 		case "weeks":
 			withWeeks = true;
+			break;
+		case "students":
+			withStudents = true;
+			break;
+		case "teachers":
+			withTeachers = true;
 			break;
 
 		default:

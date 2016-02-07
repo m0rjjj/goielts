@@ -3,26 +3,26 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorator="layout">
 <head>
-<title>Edit Course</title>
+<title>Course Create</title>
 </head>
 <body ng-app="hello">
 	<div class="section" layout:fragment="layout_content">
 		<ul class="breadcrumb">
 			<li><a href="/">Admin Home</a></li>
 			<li><a href="/admin/course_list">Course List</a></li>
-			<li>Edit Course</li>
+			<li>Create Course</li>
 		</ul>
 		<div ng-controller="home" class="row">
 			<div class="col-md-12">
 				<form class="form-horizontal" th:action="@{''}" th:method="post" th:object="${course}">
 					<fieldset>
 						<!-- Form Name -->
-						<legend>Course</legend>
+						<legend>Create Course</legend>
 
 						<!-- Text input-->
 						<div class="form-group" th:classappend="${#fields.hasErrors('name')}? 'has-error'">
 							<label class="col-md-2 control-label" for="name">Name</label>
-							<div class="col-md-10">
+							<div class="col-md-8">
 								<input th:field="*{name}" class="form-control input-md" />
 								<span class="help-block" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Incorrect</span>
 							</div>
@@ -31,17 +31,18 @@
 						<!-- Text input-->
 						<div class="form-group" th:classappend="${#fields.hasErrors('description')}? 'has-error'">
 							<label class="col-md-2 control-label" for="description">Description</label>
-							<div class="col-md-10">
+							<div class="col-md-8">
 								<textarea th:field="*{description}" class="form-control input-md editor" ></textarea>
 								<span class="help-block" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Incorrect</span>
 							</div>
 						</div>
+						
 
 						<!-- Button (Double) -->
 						<div class="form-group">
 							<label class="col-md-2 control-label" for="create"></label>
 							<div class="col-md-10">
-								<button id="create" name="create" class="btn btn-success">Update</button>
+								<button id="create" name="create" class="btn btn-success">Create</button>
 								<a id="cancel" th:href="@{'/admin/course_list'}" class="btn btn-danger">Cancel</a>
 							</div>
 						</div>

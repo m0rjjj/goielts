@@ -1,5 +1,7 @@
 package au.com.goielts.services;
 
+import java.util.List;
+
 import au.com.goielts.model.Teacher;
 
 public interface TeacherService {
@@ -11,4 +13,10 @@ public interface TeacherService {
 	TeacherService with(String name);
 
 	Teacher findById(int id);
+
+	void createProfile(int id);
+
+	List<Teacher> findAllByTerm(String term);
+
+	void updateProfile(int id, Teacher teacher);
 }

@@ -9,44 +9,60 @@
 	<section layout:fragment="sidebar_layout_content">
 		<ul class="breadcrumb">
 			<li><a th:href="@{'/course/list'}">Course List</a></li>
-			<li><a th:href="@{'/course/view/'+${task.course.id}}" th:text="${task.course.name}">Course Home</a></li>
+			<li><a th:href="@{'/course/view/'+${task.course.id}}"
+				th:text="${task.course.name}">Course Home</a></li>
+			<li th:text="${task.name}"></li>
 		</ul>
 		<h1 th:text="${task.name}">Assessment name</h1>
-		<p th:utext="${task.description}">
-			Description goes here
+		<p th:utext="${task.description}">Description goes here</p>
+		<p>
+			<strong>Due:</strong> <span th:text="${task.formattedDueDate}"></span>
 		</p>
-		<p><strong>Due:</strong> <span th:text="${task.formattedDueDate}"></span></p>
-		<form th:action="@{'/task/'+${task.id}+'/assignment/upload'}" th:method="post" enctype="multipart/form-data">
-			
-			
-			<div class="form-group">
-				<th:block th:if="${assessment}"> 
-				<div>
-					<h2><i class="fa fa-fw fa-file"></i> Uploaded: </h2>
-					<p>
-						<a th:href="@{'/download/'+${assessment.assessmentFile.id}}">
-							<i class="fa fa-fw fa-file-word-o"></i>
-							<span th:text="${assessment.assessmentFile.fileName}" th:remove="tag"></span>
-						</a>
-					</p>
-					<p>
-						To change the file upload a new file
-					</p>
+		<th:block th:if="!${assessment} or !${assessment.mark}">
+			<form th:action="@{'/task/'+${task.id}+'/assignment/upload'}"
+				th:method="post" enctype="multipart/form-data">
+
+
+				<div class="form-group">
+					<th:block th:if="${assessment}">
+						<div>
+							<h2>
+								<i class="fa fa-fw fa-file"></i> Uploaded:
+							</h2>
+							<p>
+								<a th:href="@{'/download/'+${assessment.assessmentFile.id}}">
+									<i class="fa fa-fw fa-file-word-o"></i> <span
+									th:text="${assessment.assessmentFile.fileName}" th:remove="tag"></span>
+								</a>
+							</p>
+							<p>To change the file upload a new file</p>
+						</div>
+					</th:block>
+					<th:block th:if="!${assessment}">
+						<h2>
+							<i class="fa fa-fw fa-file"></i> Please select the assessment
+							file
+						</h2>
+					</th:block>
+					<input type="file" name="file" />
 				</div>
-				</th:block>
-				<th:block th:if="!${assessment}"> 
-				<h2><i class="fa fa-fw fa-file"></i>
-					Please select the assessment file
-				</h2>
-				</th:block>
-				<input type="file" name="file" />
-			</div>
-			<div class="form-group">
-				<button type="submit" class="btn btn-default">Upload</button>
-			</div>
-		</form>
-		<br/> 
-		
+				<div class="form-group">
+					<button type="submit" class="btn btn-default">Upload</button>
+				</div>
+			</form>
+		</th:block>
+		<th:block th:if="${assessment} and ${assessment.mark}">
+			<h3>
+				Your mark is: <strong th:text="${assessment.mark}"></strong>
+			</h3>
+			<p>
+				Download marked assessment: <span
+					th:with="file=${assessment.markedFile}"
+					th:utext="${@fileHelper.getIconLink(file)}"></span>
+			</p>
+		</th:block>
+		<br />
+
 
 	</section>
 </body>

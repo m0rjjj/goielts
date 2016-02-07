@@ -9,11 +9,13 @@ public interface CourseDao {
 	 
     void save(Course course);
      
-    void delete(String id);
+    int deleteById(int id);
      
     List<Course> findAll();
 
 	int countByStudentId(int id);
 
 	Course findByTaskId(int id);
+
+	void merge(Course course);
 }

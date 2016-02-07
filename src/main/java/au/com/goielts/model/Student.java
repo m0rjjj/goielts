@@ -29,7 +29,7 @@ public class Student extends User{
 	private String about;
 	
 	@ManyToMany(mappedBy="students")
-	@OrderBy("name")
+	@OrderBy("id")
     private Set<Course> courses = new LinkedHashSet<>();
 
 	public String getStudentId() {

@@ -1,5 +1,7 @@
 package au.com.goielts.services;
 
+import java.util.List;
+
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,6 +42,11 @@ public class StudentServiceImpl implements StudentService{
 	}
 	
 	@Override
+	public List<Student> findAllByTerm(String term) {
+		return dao.findAllByTerm(term);
+	}
+	
+	@Override
 	public StudentService with(String name){
 		switch (name) {
 		case "courses":
@@ -51,6 +58,24 @@ public class StudentServiceImpl implements StudentService{
 		}
 		
 		return this;
+	}
+
+	@Override
+	public void createProfile(int id) {
+		dao.createProfile(id);
+	}
+	
+	@Override
+	public void updateProfile(int id, Student student){
+		Student entity = dao.findById(id);
+		if(entity!=null){
+			entity.setFirstName(student.getFirstName());
+			entity.setLastName(student.getLastName());
+			entity.setEmail(student.getEmail());
+			entity.setPhone(student.getPhone());
+			entity.setAbout(student.getAbout());
+			entity.setAddress(student.getAddress());
+		}
 	}
 
 }

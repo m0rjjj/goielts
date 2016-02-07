@@ -29,6 +29,14 @@ public class User {
 	public interface ValidationStepTwo {
         // validation group marker interface
     }
+	
+	public interface ValidationStudentProfile{
+		
+	}
+	
+	public interface ValidationTeacherProfile{
+		
+	}
  
     @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id;
@@ -41,15 +49,15 @@ public class User {
     @Transient
     private String confirmedPassword;
          
-    @NotBlank(groups = {ValidationStepOne.class})
+    @NotBlank(groups = {ValidationStepOne.class, ValidationStudentProfile.class, ValidationTeacherProfile.class})
     @Column(name="FIRST_NAME", nullable=false)
     private String firstName;
  
-    @NotBlank(groups = {ValidationStepOne.class})
+    @NotBlank(groups = {ValidationStepOne.class, ValidationStudentProfile.class, ValidationTeacherProfile.class})
     @Column(name="LAST_NAME", nullable=false)
     private String lastName;
  
-    @NotBlank(groups = {ValidationStepOne.class})
+    @NotBlank(groups = {ValidationStepOne.class, ValidationStudentProfile.class, ValidationTeacherProfile.class})
     @Column(name="EMAIL", nullable=false)
     private String email;
     
@@ -125,6 +133,14 @@ public class User {
  
     public void setUserProfiles(Set<Role> roles) {
         this.roles = roles;
+    }
+    
+    public String getRole(){
+    	return this.roles.iterator().next().getType();
+    }
+    
+    public String getFullName(){
+    	return this.firstName+" "+this.lastName;
     }
 
 	@Override

@@ -24,10 +24,10 @@ public class CourseDaoImpl extends AbstractDao<Integer, Course> implements Cours
 	}
 
 	@Override
-	public void delete(String id) {
+	public int deleteById(int id) {
 		Query query = getSession().createSQLQuery("delete from Course where id = :id");
-        query.setString("id", id);
-        query.executeUpdate();
+        query.setInteger("id", id);
+        return query.executeUpdate();
 		
 	}
 
@@ -50,6 +50,11 @@ public class CourseDaoImpl extends AbstractDao<Integer, Course> implements Cours
 		Query query = getSession().createQuery("select t.course from Task t where t.id=:id");
 		query.setInteger("id", id);
 		return (Course)query.uniqueResult();
+	}
+	
+	@Override
+	public void merge(Course course){
+		getSession().merge(course);
 	}
 
 }

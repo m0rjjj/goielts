@@ -28,7 +28,7 @@ public class Teacher extends User{
 	private String qualifications;
 	
 	@ManyToMany(mappedBy="teachers")
-	@OrderBy("name")
+	@OrderBy("id")
     private Set<Course> courses = new LinkedHashSet<>();
 
 	public String getAddress() {

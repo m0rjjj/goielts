@@ -12,8 +12,6 @@ public interface CourseService {
 
 	void update(Course course);
 
-	void delete(String id);
-
 	List<Course> findAll();
 
 	int countByStudentId(int id);
@@ -21,5 +19,9 @@ public interface CourseService {
 	CourseService with(String name);
 
 	Course findByTaskId(int id);
+
+	void merge(Course course);
+
+	int deleteById(int id);
 
 }

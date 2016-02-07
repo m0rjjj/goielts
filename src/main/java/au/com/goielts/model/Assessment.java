@@ -36,7 +36,7 @@ public class Assessment {
 	@JoinColumn(name = "teacher_id")
 	private User teacher;
 	
-	private double mark;
+	private Double mark;
 
 	public int getId() {
 		return id;
@@ -70,11 +70,11 @@ public class Assessment {
 		this.markedFile = markedFile;
 	}
 
-	public double getMark() {
+	public Double getMark() {
 		return mark;
 	}
 
-	public void setMark(double mark) {
+	public void setMark(Double mark) {
 		this.mark = mark;
 	}
 
